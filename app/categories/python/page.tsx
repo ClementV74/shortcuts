@@ -4,271 +4,649 @@ import { useState } from "react"
 import { motion } from "framer-motion"
 import { Code, Search } from "lucide-react"
 import { Input } from "@/components/ui/input"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import CodeBlock from "@/components/code-block"
 
-// Define the syntax item type
-type SyntaxItem = {
-  name: string
-  description: string
-  example: string
-  category: string
-}
-
 export default function PythonLanguagePage() {
   const [searchQuery, setSearchQuery] = useState("")
 
-  // Python language syntax organized by category
-  const syntaxItems: SyntaxItem[] = [
-    // Basic syntax
+  // Format specifiers for print
+  const formatSpecifiers = [
     {
-      name: "print()",
-      description: "Afficher du texte ou des variables",
-      example:
-        'print("Hello, World!")\nname = "John"\nage = 30\nprint(f"Hello, {name}! You are {age} years old.")\nprint("Score:", 100)',
-      category: "basic",
+      specifier: "print()",
+      description: "Fonction d'affichage standard",
+      example: 'print("Hello, World!")',
     },
     {
-      name: "variables",
-      description: "Stocker des valeurs",
-      example:
-        'name = "John Doe"  # string\nage = 30  # integer\nheight = 1.85  # float\nis_student = True  # boolean\n\n# Multiple assignment\nx, y, z = 1, 2, 3',
-      category: "basic",
+      specifier: "f-strings",
+      description: "Chaînes de caractères formatées (Python 3.6+)",
+      example: 'name = "John"\nage = 30\nprint(f"Hello, {name}! You are {age} years old.")',
     },
     {
-      name: "comments",
-      description: "Ajouter des notes dans le code",
-      example:
-        '# This is a single-line comment\n\n"""\nThis is a multi-line comment\nor docstring that can be used\nto document functions, classes, etc.\n"""',
-      category: "basic",
+      specifier: "str.format()",
+      description: "Méthode de formatage de chaînes",
+      example: 'name = "John"\nage = 30\nprint("Hello, {}! You are {} years old.".format(name, age))',
     },
     {
-      name: "input()",
-      description: "Lire l'entrée de l'utilisateur",
-      example: 'name = input("Enter your name: ")\nage = int(input("Enter your age: "))  # Convert to integer',
-      category: "basic",
+      specifier: "% operator",
+      description: "Opérateur de formatage (style C)",
+      example: 'name = "John"\nage = 30\nprint("Hello, %s! You are %d years old." % (name, age))',
     },
     {
-      name: "import",
-      description: "Importer des modules ou des packages",
-      example:
-        "import math\nresult = math.sqrt(16)  # 4.0\n\nfrom datetime import datetime\nnow = datetime.now()\n\nimport numpy as np  # with alias\narr = np.array([1, 2, 3])",
-      category: "basic",
+      specifier: "{:d}",
+      description: "Format entier",
+      example: 'num = 42\nprint(f"Nombre: {num:d}")',
     },
+    {
+      specifier: "{:f}",
+      description: "Format nombre à virgule flottante",
+      example: 'pi = 3.14159\nprint(f"Pi: {pi:f}")',
+    },
+    {
+      specifier: "{:.2f}",
+      description: "Format nombre à virgule flottante avec précision",
+      example: 'pi = 3.14159\nprint(f"Pi: {pi:.2f}")',
+    },
+    {
+      specifier: "{:,}",
+      description: "Format nombre avec séparateur de milliers",
+      example: 'num = 1000000\nprint(f"Nombre: {num:,}")',
+    },
+    {
+      specifier: "{:e}",
+      description: "Format notation scientifique",
+      example: 'num = 1000000\nprint(f"Nombre: {num:e}")',
+    },
+    {
+      specifier: "{:%}",
+      description: "Format pourcentage",
+      example: 'ratio = 0.25\nprint(f"Pourcentage: {ratio:%}")',
+    },
+    {
+      specifier: "{:b}",
+      description: "Format binaire",
+      example: 'num = 42\nprint(f"Binaire: {num:b}")',
+    },
+    {
+      specifier: "{:x}",
+      description: "Format hexadécimal",
+      example: 'num = 42\nprint(f"Hexadécimal: {num:x}")',
+    },
+    {
+      specifier: "{:o}",
+      description: "Format octal",
+      example: 'num = 42\nprint(f"Octal: {num:o}")',
+    },
+  ]
 
-    // Data types
+  // Data types
+  const dataTypes = [
     {
-      name: "numbers",
-      description: "Types numériques (int, float, complex)",
-      example:
-        "x = 10  # int\ny = 3.14  # float\nz = 1 + 2j  # complex\n\n# Operations\nsum = x + y  # 13.14\nproduct = x * y  # 31.4\npower = x ** 2  # 100 (exponentiation)\ndivision = x / 3  # 3.3333... (float division)\nint_division = x // 3  # 3 (integer division)\nremainder = x % 3  # 1 (modulo)",
-      category: "datatypes",
+      type: "int",
+      description: "Entier de précision arbitraire",
+      example: "x = 42",
+      operations:
+        "Addition (+), Soustraction (-), Multiplication (*), Division (/), Division entière (//), Modulo (%), Puissance (**)",
     },
     {
-      name: "strings",
-      description: "Séquences de caractères",
-      example:
-        "s1 = 'Single quotes'\ns2 = \"Double quotes\"\ns3 = '''Triple quotes for\nmulti-line strings'''\n\n# String operations\nname = \"Python\"\nlength = len(name)  # 6\nfirst = name[0]  # 'P'\nlast = name[-1]  # 'n'\nslice = name[1:4]  # 'yth'\n\n# Methods\nupper = name.upper()  # 'PYTHON'\nreplaced = name.replace('P', 'J')  # 'Jython'\nsplit_result = \"a,b,c\".split(',')  # ['a', 'b', 'c']\n\n# Formatting\nformatted = f\"{name} has {length} characters\"",
-      category: "datatypes",
+      type: "float",
+      description: "Nombre à virgule flottante",
+      example: "x = 3.14",
+      operations: "Addition (+), Soustraction (-), Multiplication (*), Division (/), Puissance (**)",
     },
     {
-      name: "lists",
-      description: "Collections ordonnées et modifiables",
-      example:
-        'fruits = ["apple", "banana", "cherry"]\nnumbers = [1, 2, 3, 4, 5]\nmixed = [1, "hello", 3.14, True]\n\n# Accessing elements\nfirst = fruits[0]  # "apple"\nlast = fruits[-1]  # "cherry"\nsubset = fruits[1:3]  # ["banana", "cherry"]\n\n# Modifying\nfruits.append("orange")  # Add to end\nfruits.insert(1, "mango")  # Insert at position\nfruits.remove("banana")  # Remove by value\npopped = fruits.pop()  # Remove and return last item\nfruits[0] = "pear"  # Change value\n\n# Other operations\nlength = len(fruits)\nsorted_fruits = sorted(fruits)\nfruits.reverse()\nfruits.sort()\nindex = fruits.index("cherry")\ncount = fruits.count("apple")',
-      category: "datatypes",
+      type: "complex",
+      description: "Nombre complexe",
+      example: "x = 1 + 2j",
+      operations: "Addition (+), Soustraction (-), Multiplication (*), Division (/), Puissance (**)",
     },
     {
-      name: "tuples",
-      description: "Collections ordonnées et immuables",
-      example:
-        'coordinates = (10, 20)\ncolors = ("red", "green", "blue")\nsingle_item = (1,)  # Comma needed for single item\n\n# Accessing elements (similar to lists)\nfirst = colors[0]  # "red"\nsubset = colors[1:]  # ("green", "blue")\n\n# Operations\nlength = len(colors)\ncount = colors.count("red")\nindex = colors.index("green")\n\n# Unpacking\nx, y = coordinates\nr, g, b = colors',
-      category: "datatypes",
+      type: "bool",
+      description: "Booléen (True ou False)",
+      example: "x = True",
+      operations: "ET logique (and), OU logique (or), NON logique (not)",
     },
     {
-      name: "dictionaries",
-      description: "Collections de paires clé-valeur",
-      example:
-        'person = {\n  "name": "John",\n  "age": 30,\n  "city": "New York"\n}\n\n# Accessing values\nname = person["name"]  # "John"\nage = person.get("age")  # 30\nunknown = person.get("job", "Not specified")  # Default value\n\n# Modifying\nperson["email"] = "john@example.com"  # Add new key-value\nperson["age"] = 31  # Update value\ndel person["city"]  # Remove key-value\npopped = person.pop("email")  # Remove and return value\n\n# Other operations\nkeys = person.keys()\nvalues = person.values()\nitems = person.items()  # Returns (key, value) pairs\n\n# Iteration\nfor key in person:\n  print(key, person[key])\n\nfor key, value in person.items():\n  print(key, value)',
-      category: "datatypes",
+      type: "str",
+      description: "Chaîne de caractères (immuable)",
+      example: 'x = "Hello"',
+      operations:
+        "Concaténation (+), Répétition (*), Indexation ([]), Découpage ([:]), Méthodes (upper(), lower(), strip(), etc.)",
     },
     {
-      name: "sets",
-      description: "Collections non ordonnées d'éléments uniques",
-      example:
-        'fruits = {"apple", "banana", "cherry"}\nnumbers = set([1, 2, 2, 3, 4, 4])  # Creates {1, 2, 3, 4}\n\n# Modifying\nfruits.add("orange")\nfruits.remove("banana")  # Raises error if not found\nfruits.discard("banana")  # No error if not found\npopped = fruits.pop()  # Remove and return arbitrary element\n\n# Set operations\nset1 = {1, 2, 3}\nset2 = {3, 4, 5}\nunion = set1 | set2  # or set1.union(set2)\nintersection = set1 & set2  # or set1.intersection(set2)\ndifference = set1 - set2  # or set1.difference(set2)\nsymm_diff = set1 ^ set2  # or set1.symmetric_difference(set2)',
-      category: "datatypes",
+      type: "list",
+      description: "Liste (mutable, ordonnée)",
+      example: "x = [1, 2, 3]",
+      operations:
+        "Ajout (append()), Insertion (insert()), Suppression (remove(), pop()), Indexation ([]), Découpage ([:]), Concaténation (+)",
     },
+    {
+      type: "tuple",
+      description: "Tuple (immuable, ordonné)",
+      example: "x = (1, 2, 3)",
+      operations: "Indexation ([]), Découpage ([:]), Concaténation (+)",
+    },
+    {
+      type: "dict",
+      description: "Dictionnaire (mutable, non ordonné avant Python 3.7)",
+      example: 'x = {"a": 1, "b": 2}',
+      operations:
+        "Accès (x[key]), Ajout (x[key] = value), Suppression (del x[key], pop()), Méthodes (keys(), values(), items())",
+    },
+    {
+      type: "set",
+      description: "Ensemble (mutable, non ordonné, éléments uniques)",
+      example: "x = {1, 2, 3}",
+      operations: "Union (|), Intersection (&), Différence (-), Différence symétrique (^), Méthodes (add(), remove())",
+    },
+    {
+      type: "frozenset",
+      description: "Ensemble immuable",
+      example: "x = frozenset([1, 2, 3])",
+      operations: "Union (|), Intersection (&), Différence (-), Différence symétrique (^)",
+    },
+    {
+      type: "bytes",
+      description: "Séquence d'octets immuable",
+      example: 'x = b"hello"',
+      operations: "Indexation ([]), Découpage ([:]), Concaténation (+)",
+    },
+    {
+      type: "bytearray",
+      description: "Séquence d'octets mutable",
+      example: 'x = bytearray(b"hello")',
+      operations: "Indexation ([]), Découpage ([:]), Concaténation (+), Modification ([i] = value)",
+    },
+    {
+      type: "None",
+      description: "Valeur nulle",
+      example: "x = None",
+      operations: "Comparaison (is, is not)",
+    },
+  ]
 
-    // Control structures
+  // Control structures
+  const controlStructures = [
     {
       name: "if-elif-else",
       description: "Structure de contrôle conditionnel",
-      example:
-        'x = 10\n\nif x > 20:\n  print("x is greater than 20")\nelif x > 5:\n  print("x is greater than 5 but not greater than 20")\nelse:\n  print("x is 5 or less")\n\n# Ternary operator (conditional expression)\nstatus = "adult" if age >= 18 else "minor"',
-      category: "control",
+      example: `x = 10
+
+if x > 20:
+    print("x is greater than 20")
+elif x > 5:
+    print("x is greater than 5 but not greater than 20")
+else:
+    print("x is 5 or less")
+
+# Opérateur ternaire
+status = "adult" if age >= 18 else "minor"`,
     },
     {
-      name: "for loops",
-      description: "Itérer sur une séquence",
-      example:
-        '# Iterate over a list\nfruits = ["apple", "banana", "cherry"]\nfor fruit in fruits:\n  print(fruit)\n\n# Iterate with index\nfor i, fruit in enumerate(fruits):\n  print(f"{i}: {fruit}")\n\n# Iterate over a range\nfor i in range(5):  # 0 to 4\n  print(i)\n\nfor i in range(2, 8):  # 2 to 7\n  print(i)\n\nfor i in range(1, 10, 2):  # 1, 3, 5, 7, 9\n  print(i)\n\n# Iterate over a dictionary\nperson = {"name": "John", "age": 30}\nfor key in person:\n  print(key, person[key])\n\nfor key, value in person.items():\n  print(key, value)',
-      category: "control",
+      name: "for loop",
+      description: "Boucle pour itérer sur une séquence",
+      example: `# Itérer sur une liste
+fruits = ["apple", "banana", "cherry"]
+for fruit in fruits:
+    print(fruit)
+
+# Itérer avec index
+for i, fruit in enumerate(fruits):
+    print(f"{i}: {fruit}")
+
+# Itérer sur une plage
+for i in range(5):  # 0 à 4
+    print(i)
+
+# Itérer sur un dictionnaire
+person = {"name": "John", "age": 30}
+for key, value in person.items():
+    print(f"{key}: {value}")`,
     },
     {
-      name: "while loops",
-      description: "Exécuter tant qu'une condition est vraie",
-      example:
-        "count = 5\nwhile count > 0:\n  print(count)\n  count -= 1\n\n# break and continue\nn = 0\nwhile True:\n  n += 1\n  if n == 3:\n    continue  # Skip the rest of this iteration\n  print(n)\n  if n == 5:\n    break  # Exit the loop",
-      category: "control",
+      name: "while loop",
+      description: "Boucle qui s'exécute tant que la condition est vraie",
+      example: `count = 5
+while count > 0:
+    print(count)
+    count -= 1
+
+# break et continue
+n = 0
+while True:
+    n += 1
+    if n == 3:
+        continue  # Passer à l'itération suivante
+    print(n)
+    if n == 5:
+        break  # Sortir de la boucle`,
     },
     {
-      name: "list comprehensions",
+      name: "list comprehension",
       description: "Créer des listes de manière concise",
-      example:
-        "# Basic list comprehension\nsquares = [x**2 for x in range(10)]  # [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]\n\n# With condition\neven_squares = [x**2 for x in range(10) if x % 2 == 0]  # [0, 4, 16, 36, 64]\n\n# Nested loops\ncoordinates = [(x, y) for x in range(3) for y in range(2)]\n# [(0, 0), (0, 1), (1, 0), (1, 1), (2, 0), (2, 1)]\n\n# Dictionary comprehension\nsquare_dict = {x: x**2 for x in range(5)}\n# {0: 0, 1: 1, 2: 4, 3: 9, 4: 16}\n\n# Set comprehension\neven_set = {x for x in range(10) if x % 2 == 0}\n# {0, 2, 4, 6, 8}",
-      category: "control",
-    },
+      example: `# Compréhension de liste simple
+squares = [x**2 for x in range(10)]  # [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
 
-    // Functions
-    {
-      name: "function definition",
-      description: "Définir des fonctions réutilisables",
-      example:
-        'def greet(name):\n  """This function greets the person passed in as a parameter"""\n  return f"Hello, {name}!"\n\n# Function call\nmessage = greet("John")\nprint(message)  # "Hello, John!"\n\n# Default parameters\ndef greet_with_time(name, time="morning"):\n  return f"Good {time}, {name}!"\n\nprint(greet_with_time("John"))  # "Good morning, John!"\nprint(greet_with_time("John", "evening"))  # "Good evening, John!"',
-      category: "functions",
-    },
-    {
-      name: "args and kwargs",
-      description: "Nombre variable d'arguments",
-      example:
-        '# *args for variable positional arguments\ndef sum_all(*args):\n  total = 0\n  for num in args:\n    total += num\n  return total\n\nresult = sum_all(1, 2, 3, 4, 5)  # 15\n\n# **kwargs for variable keyword arguments\ndef print_info(**kwargs):\n  for key, value in kwargs.items():\n    print(f"{key}: {value}")\n\nprint_info(name="John", age=30, city="New York")\n\n# Both together\ndef combined_example(a, b, *args, **kwargs):\n  print(f"a = {a}, b = {b}")\n  print(f"args = {args}")\n  print(f"kwargs = {kwargs}")\n\ncombined_example(1, 2, 3, 4, 5, x=10, y=20)',
-      category: "functions",
-    },
-    {
-      name: "lambda functions",
-      description: "Fonctions anonymes courtes",
-      example:
-        "# Basic lambda function\nsquare = lambda x: x**2\nprint(square(5))  # 25\n\n# With multiple parameters\nsum_func = lambda x, y: x + y\nprint(sum_func(3, 4))  # 7\n\n# With built-in functions\nnumbers = [1, 5, 3, 9, 2]\nsorted_numbers = sorted(numbers)  # [1, 2, 3, 5, 9]\nsorted_by_abs = sorted([-3, -2, 1, 4], key=lambda x: abs(x))  # [1, -2, -3, 4]\n\n# With map and filter\nsquares = list(map(lambda x: x**2, numbers))  # [1, 25, 9, 81, 4]\neven_numbers = list(filter(lambda x: x % 2 == 0, numbers))  # [2]",
-      category: "functions",
-    },
-    {
-      name: "decorators",
-      description: "Modifier ou étendre des fonctions",
-      example:
-        '# Basic decorator\ndef my_decorator(func):\n  def wrapper():\n    print("Something before the function is called.")\n    func()\n    print("Something after the function is called.")\n  return wrapper\n\n@my_decorator\ndef say_hello():\n  print("Hello!")\n\n# Equivalent to: say_hello = my_decorator(say_hello)\nsay_hello()\n\n# Decorator with arguments\ndef repeat(n):\n  def decorator(func):\n    def wrapper(*args, **kwargs):\n      for _ in range(n):\n        result = func(*args, **kwargs)\n      return result\n    return wrapper\n  return decorator\n\n@repeat(3)\ndef say_hi(name):\n  print(f"Hi, {name}!")\n  return name\n\nsay_hi("Alice")  # Prints "Hi, Alice!" three times',
-      category: "functions",
-    },
+# Avec condition
+even_squares = [x**2 for x in range(10) if x % 2 == 0]  # [0, 4, 16, 36, 64]
 
-    // Object-oriented programming
-    {
-      name: "classes",
-      description: "Définir des objets avec attributs et méthodes",
-      example:
-        'class Person:\n  # Class attribute\n  species = "Homo sapiens"\n  \n  # Constructor\n  def __init__(self, name, age):\n    # Instance attributes\n    self.name = name\n    self.age = age\n  \n  # Instance method\n  def greet(self):\n    return f"Hello, my name is {self.name}"\n  \n  # String representation\n  def __str__(self):\n    return f"{self.name}, {self.age} years old"\n\n# Creating objects\nperson1 = Person("John", 30)\nperson2 = Person("Jane", 25)\n\n# Accessing attributes and methods\nprint(person1.name)  # "John"\nprint(person1.greet())  # "Hello, my name is John"\nprint(person1)  # "John, 30 years old"',
-      category: "oop",
-    },
-    {
-      name: "inheritance",
-      description: "Créer une classe qui hérite d'une autre classe",
-      example:
-        'class Animal:\n  def __init__(self, name):\n    self.name = name\n  \n  def speak(self):\n    pass  # Abstract method to be overridden\n\nclass Dog(Animal):\n  def speak(self):\n    return f"{self.name} says Woof!"\n\nclass Cat(Animal):\n  def speak(self):\n    return f"{self.name} says Meow!"\n\n# Creating objects\ndog = Dog("Rex")\ncat = Cat("Whiskers")\n\nprint(dog.speak())  # "Rex says Woof!"\nprint(cat.speak())  # "Whiskers says Meow!"',
-      category: "oop",
-    },
-    {
-      name: "special methods",
-      description: "Méthodes magiques pour personnaliser le comportement des objets",
-      example:
-        'class Vector:\n  def __init__(self, x, y):\n    self.x = x\n    self.y = y\n  \n  # String representation\n  def __str__(self):\n    return f"Vector({self.x}, {self.y})"\n  \n  # Addition\n  def __add__(self, other):\n    return Vector(self.x + other.x, self.y + other.y)\n  \n  # Equality comparison\n  def __eq__(self, other):\n    return self.x == other.x and self.y == other.y\n  \n  # Length (magnitude)\n  def __len__(self):\n    return int((self.x**2 + self.y**2)**0.5)\n\n# Usage\nv1 = Vector(2, 3)\nv2 = Vector(3, 4)\nv3 = v1 + v2  # Vector(5, 7)\nprint(v1 == Vector(2, 3))  # True\nprint(len(v2))  # 5',
-      category: "oop",
-    },
+# Compréhension de dictionnaire
+square_dict = {x: x**2 for x in range(5)}  # {0: 0, 1: 1, 2: 4, 3: 9, 4: 16}
 
-    // Modules and packages
-    {
-      name: "modules",
-      description: "Organiser le code en fichiers séparés",
-      example:
-        '# File: mymodule.py\ndef greet(name):\n  return f"Hello, {name}!"\n\nPI = 3.14159\n\nclass Person:\n  def __init__(self, name):\n    self.name = name\n\n# In another file\nimport mymodule\n\nprint(mymodule.greet("John"))  # "Hello, John!"\nprint(mymodule.PI)  # 3.14159\nperson = mymodule.Person("Jane")\n\n# Import specific items\nfrom mymodule import greet, PI\nprint(greet("Alice"))  # "Hello, Alice!"\n\n# Import with alias\nimport mymodule as mm\nprint(mm.greet("Bob"))  # "Hello, Bob!"',
-      category: "modules",
+# Compréhension d'ensemble
+even_set = {x for x in range(10) if x % 2 == 0}  # {0, 2, 4, 6, 8}`,
     },
-    {
-      name: "packages",
-      description: "Organiser les modules en répertoires",
-      example:
-        "# Directory structure:\n# mypackage/\n#   __init__.py\n#   module1.py\n#   module2.py\n#   subpackage/\n#     __init__.py\n#     module3.py\n\n# In __init__.py (optional)\nfrom .module1 import function1\nfrom .subpackage import module3\n\n# Usage\nimport mypackage\nfrom mypackage import module1\nfrom mypackage.subpackage import module3\n\n# Relative imports (inside package)\n# In module2.py\nfrom . import module1  # Same directory\nfrom .subpackage import module3  # Subdirectory",
-      category: "modules",
-    },
-
-    // Exception handling
     {
       name: "try-except",
-      description: "Gérer les erreurs et les exceptions",
-      example:
-        '# Basic try-except\ntry:\n  result = 10 / 0  # This will raise a ZeroDivisionError\nexcept ZeroDivisionError:\n  print("Cannot divide by zero!")\n\n# Multiple exceptions\ntry:\n  num = int(input("Enter a number: "))\n  result = 10 / num\nexcept ValueError:\n  print("Invalid input. Please enter a number.")\nexcept ZeroDivisionError:\n  print("Cannot divide by zero!")\n\n# Catching any exception\ntry:\n  # Some risky code\n  pass\nexcept Exception as e:\n  print(f"An error occurred: {e}")\n\n# try-except-else-finally\ntry:\n  file = open("data.txt", "r")\nexcept FileNotFoundError:\n  print("File not found!")\nelse:\n  # Runs if no exception was raised\n  content = file.read()\n  print(content)\nfinally:\n  # Always runs, regardless of exception\n  if \'file\' in locals() and not file.closed:\n    file.close()\n    print("File closed.")',
-      category: "exceptions",
+      description: "Gestion des exceptions",
+      example: `try:
+    result = 10 / 0  # Ceci va lever une ZeroDivisionError
+except ZeroDivisionError:
+    print("Division par zéro!")
+except (ValueError, TypeError) as e:
+    print(f"Erreur de valeur ou de type: {e}")
+except Exception as e:
+    print(f"Une erreur s'est produite: {e}")
+else:
+    print("Aucune exception n'a été levée")
+finally:
+    print("Ce bloc est toujours exécuté")`,
     },
     {
-      name: "raise",
-      description: "Lever des exceptions",
-      example:
-        'def divide(a, b):\n  if b == 0:\n    raise ZeroDivisionError("Cannot divide by zero")\n  return a / b\n\n# Custom exceptions\nclass CustomError(Exception):\n  """Custom exception class"""\n  def __init__(self, message, code):\n    self.message = message\n    self.code = code\n    super().__init__(self.message)\n\ndef process_data(data):\n  if not data:\n    raise CustomError("Empty data provided", 100)\n  # Process data...\n\n# Using custom exception\ntry:\n  process_data([])\nexcept CustomError as e:\n  print(f"Error {e.code}: {e.message}")',
-      category: "exceptions",
-    },
+      name: "with statement",
+      description: "Gestion de contexte (Context Manager)",
+      example: `# Utilisation avec des fichiers
+with open("file.txt", "r") as file:
+    content = file.read()
+    # Le fichier est automatiquement fermé à la sortie du bloc
 
-    // File handling
-    {
-      name: "file operations",
-      description: "Lire et écrire des fichiers",
-      example:
-        '# Writing to a file\nwith open("data.txt", "w") as file:\n  file.write("Hello, World!\\n")\n  file.write("This is a test.")\n\n# Reading from a file\nwith open("data.txt", "r") as file:\n  content = file.read()  # Read entire file\n  print(content)\n\n# Reading line by line\nwith open("data.txt", "r") as file:\n  for line in file:\n    print(line.strip())  # strip() removes newline\n\n# Reading specific lines\nwith open("data.txt", "r") as file:\n  lines = file.readlines()  # List of lines\n  first_line = lines[0]\n\n# Appending to a file\nwith open("data.txt", "a") as file:\n  file.write("\\nAppended line.")\n\n# Binary files\nwith open("image.jpg", "rb") as file:\n  data = file.read()\n\nwith open("copy.jpg", "wb") as file:\n  file.write(data)',
-      category: "files",
-    },
-    {
-      name: "JSON handling",
-      description: "Travailler avec des données JSON",
-      example:
-        'import json\n\n# Python object to JSON string\ndata = {\n  "name": "John",\n  "age": 30,\n  "city": "New York",\n  "languages": ["Python", "JavaScript"],\n  "is_employee": True,\n  "salary": None\n}\n\njson_string = json.dumps(data, indent=2)\nprint(json_string)\n\n# Writing JSON to a file\nwith open("data.json", "w") as file:\n  json.dump(data, file, indent=2)\n\n# JSON string to Python object\njson_str = \'{"name":"Jane","age":25}\'\nperson = json.loads(json_str)\nprint(person["name"])  # "Jane"\n\n# Reading JSON from a file\nwith open("data.json", "r") as file:\n  loaded_data = json.load(file)\nprint(loaded_data["city"])  # "New York"',
-      category: "files",
+# Création d'un gestionnaire de contexte personnalisé
+from contextlib import contextmanager
+
+@contextmanager
+def my_context():
+    print("Entering context")
+    try:
+        yield
+    finally:
+        print("Exiting context")
+
+with my_context():
+    print("Inside context")`,
     },
   ]
 
-  // Group items by category
-  const categories = [
-    { id: "basic", name: "Syntaxe de base", icon: "📝" },
-    { id: "datatypes", name: "Types de données", icon: "🔢" },
-    { id: "control", name: "Structures de contrôle", icon: "🔄" },
-    { id: "functions", name: "Fonctions", icon: "📋" },
-    { id: "oop", name: "Programmation orientée objet", icon: "🧩" },
-    { id: "modules", name: "Modules et packages", icon: "📦" },
-    { id: "exceptions", name: "Gestion des exceptions", icon: "⚠️" },
-    { id: "files", name: "Manipulation de fichiers", icon: "📄" },
+  // Common functions
+  const commonFunctions = [
+    {
+      name: "print()",
+      module: "built-in",
+      description: "Afficher du texte sur la sortie standard",
+      example: `print("Hello, World!")
+print("Multiple", "arguments", sep=", ")
+print("No newline", end=" ")
+print("on same line")`,
+    },
+    {
+      name: "input()",
+      module: "built-in",
+      description: "Lire une entrée utilisateur",
+      example: `name = input("Enter your name: ")
+age = int(input("Enter your age: "))  # Conversion en entier`,
+    },
+    {
+      name: "len()",
+      module: "built-in",
+      description: "Obtenir la longueur d'une séquence",
+      example: `my_list = [1, 2, 3, 4, 5]
+length = len(my_list)  # 5
+
+my_string = "Hello"
+length = len(my_string)  # 5`,
+    },
+    {
+      name: "range()",
+      module: "built-in",
+      description: "Générer une séquence de nombres",
+      example: `# range(stop)
+for i in range(5):  # 0, 1, 2, 3, 4
+    print(i)
+
+# range(start, stop)
+for i in range(2, 5):  # 2, 3, 4
+    print(i)
+
+# range(start, stop, step)
+for i in range(0, 10, 2):  # 0, 2, 4, 6, 8
+    print(i)`,
+    },
+    {
+      name: "type()",
+      module: "built-in",
+      description: "Obtenir le type d'un objet",
+      example: `x = 42
+print(type(x))  # <class 'int'>
+
+y = "Hello"
+print(type(y))  # <class 'str'>`,
+    },
+    {
+      name: "sorted()",
+      module: "built-in",
+      description: "Trier une séquence",
+      example: `numbers = [3, 1, 4, 1, 5, 9, 2]
+sorted_numbers = sorted(numbers)  # [1, 1, 2, 3, 4, 5, 9]
+
+# Tri inversé
+reverse_sorted = sorted(numbers, reverse=True)  # [9, 5, 4, 3, 2, 1, 1]
+
+# Tri avec une clé personnalisée
+words = ["apple", "banana", "cherry"]
+sorted_by_length = sorted(words, key=len)  # ["apple", "cherry", "banana"]`,
+    },
+    {
+      name: "open()",
+      module: "built-in",
+      description: "Ouvrir un fichier",
+      example: `# Lecture d'un fichier
+with open("file.txt", "r") as file:
+    content = file.read()
+    
+# Écriture dans un fichier
+with open("output.txt", "w") as file:
+    file.write("Hello, World!")
+    
+# Ajout à un fichier
+with open("log.txt", "a") as file:
+    file.write("New log entry\\n")`,
+    },
+    {
+      name: "map()",
+      module: "built-in",
+      description: "Appliquer une fonction à chaque élément d'une séquence",
+      example: `numbers = [1, 2, 3, 4, 5]
+
+# Utilisation avec une fonction lambda
+squares = list(map(lambda x: x**2, numbers))  # [1, 4, 9, 16, 25]
+
+# Utilisation avec une fonction nommée
+def cube(x):
+    return x**3
+
+cubes = list(map(cube, numbers))  # [1, 8, 27, 64, 125]`,
+    },
+    {
+      name: "filter()",
+      module: "built-in",
+      description: "Filtrer une séquence selon une condition",
+      example: `numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Filtrer les nombres pairs
+even = list(filter(lambda x: x % 2 == 0, numbers))  # [2, 4, 6, 8, 10]
+
+# Avec une fonction nommée
+def is_odd(x):
+    return x % 2 != 0
+
+odd = list(filter(is_odd, numbers))  # [1, 3, 5, 7, 9]`,
+    },
+    {
+      name: "zip()",
+      module: "built-in",
+      description: "Combiner des séquences élément par élément",
+      example: `names = ["Alice", "Bob", "Charlie"]
+ages = [25, 30, 35]
+
+# Combiner deux listes
+combined = list(zip(names, ages))  # [("Alice", 25), ("Bob", 30), ("Charlie", 35)]
+
+# Décompresser (unzip)
+names_again, ages_again = zip(*combined)
+# names_again = ("Alice", "Bob", "Charlie")
+# ages_again = (25, 30, 35)`,
+    },
+    {
+      name: "enumerate()",
+      module: "built-in",
+      description: "Itérer avec un index",
+      example: `fruits = ["apple", "banana", "cherry"]
+
+for i, fruit in enumerate(fruits):
+    print(f"{i}: {fruit}")
+    
+# Avec un index de départ personnalisé
+for i, fruit in enumerate(fruits, start=1):
+    print(f"{i}: {fruit}")`,
+    },
+    {
+      name: "json.loads() / json.dumps()",
+      module: "json",
+      description: "Convertir entre JSON et objets Python",
+      example: `import json
+
+# Conversion d'une chaîne JSON en objet Python
+json_string = '{"name": "John", "age": 30}'
+person = json.loads(json_string)
+print(person["name"])  # "John"
+
+# Conversion d'un objet Python en chaîne JSON
+data = {"name": "Alice", "age": 25, "languages": ["Python", "JavaScript"]}
+json_string = json.dumps(data, indent=2)
+print(json_string)`,
+    },
+  ]
+
+  // Memory management examples
+  const memoryExamples = [
+    {
+      title: "Garbage Collection",
+      description: "Python gère automatiquement la mémoire avec un ramasse-miettes",
+      example: `# Python libère automatiquement la mémoire quand les objets ne sont plus référencés
+x = [1, 2, 3]  # Alloue de la mémoire pour la liste
+x = "hello"    # La liste précédente n'est plus référencée et sera collectée
+
+# Forcer la collecte des déchets (rarement nécessaire)
+import gc
+gc.collect()`,
+    },
+    {
+      title: "Références et comptage de références",
+      description: "Python utilise le comptage de références pour suivre les objets",
+      example: `import sys
+
+# Créer un objet et vérifier son nombre de références
+x = [1, 2, 3]
+print(sys.getrefcount(x) - 1)  # -1 car getrefcount() crée une référence temporaire
+
+# Créer une autre référence au même objet
+y = x
+print(sys.getrefcount(x) - 1)  # Le compteur augmente
+
+# Supprimer une référence
+del y
+print(sys.getrefcount(x) - 1)  # Le compteur diminue`,
+    },
+    {
+      title: "Cycles de références et collecteur générationnel",
+      description: "Python utilise un collecteur générationnel pour détecter les cycles de références",
+      example: `import gc
+
+# Créer un cycle de références
+class Node:
+    def __init__(self, name):
+        self.name = name
+        self.next = None
+
+# Créer un cycle
+node1 = Node("node1")
+node2 = Node("node2")
+node1.next = node2
+node2.next = node1
+
+# Les objets se référencent mutuellement
+# Le comptage de références ne suffit pas
+# Le collecteur générationnel s'en chargera
+
+# Vérifier les objets suivis par le collecteur
+print(gc.get_objects())
+
+# Forcer la collecte
+del node1
+del node2
+gc.collect()`,
+    },
+    {
+      title: "Gestionnaires de contexte pour les ressources",
+      description: "Utiliser des gestionnaires de contexte pour libérer les ressources",
+      example: `# Les fichiers sont automatiquement fermés
+with open("file.txt", "w") as f:
+    f.write("Hello, World!")
+# Le fichier est fermé ici, même en cas d'exception
+
+# Créer un gestionnaire de contexte personnalisé
+from contextlib import contextmanager
+
+@contextmanager
+def resource_manager():
+    print("Acquiring resource")
+    resource = {"data": "important data"}
+    try:
+        yield resource
+    finally:
+        print("Releasing resource")
+        # Nettoyage des ressources ici
+
+# Utilisation
+with resource_manager() as res:
+    print(f"Using resource: {res['data']}")`,
+    },
+    {
+      title: "Utilisation de weakref pour éviter les cycles",
+      description: "Utiliser des références faibles pour éviter les cycles de références",
+      example: `import weakref
+
+class Node:
+    def __init__(self, name):
+        self.name = name
+        self.parent = None
+        self.children = []
+    
+    def add_child(self, child):
+        self.children.append(child)
+        # Utiliser une référence faible pour éviter un cycle
+        child.parent = weakref.ref(self)
+
+# Création d'une hiérarchie
+root = Node("root")
+child = Node("child")
+root.add_child(child)
+
+# Accès via une référence faible
+parent = child.parent()  # Notez les parenthèses pour obtenir l'objet référencé
+if parent:
+    print(f"Child's parent is: {parent.name}")
+
+# Si root est supprimé, child.parent() retournera None
+del root
+print(child.parent())  # None`,
+    },
   ]
 
   // Filter items based on search query
-  const filteredItems = syntaxItems.filter(
+  const filteredFormatSpecifiers = formatSpecifiers.filter(
+    (item) =>
+      item.specifier.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.example.toLowerCase().includes(searchQuery.toLowerCase()),
+  )
+
+  const filteredDataTypes = dataTypes.filter(
+    (item) =>
+      item.type.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.example.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.operations.toLowerCase().includes(searchQuery.toLowerCase()),
+  )
+
+  const filteredControlStructures = controlStructures.filter(
     (item) =>
       item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.example.toLowerCase().includes(searchQuery.toLowerCase()),
   )
 
+  const filteredCommonFunctions = commonFunctions.filter(
+    (item) =>
+      item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.example.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.module.toLowerCase().includes(searchQuery.toLowerCase()),
+  )
+
+  const filteredMemoryExamples = memoryExamples.filter(
+    (item) =>
+      item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.example.toLowerCase().includes(searchQuery.toLowerCase()),
+  )
+
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.05,
+        delayChildren: 0.2,
+      },
+    },
+  }
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: { type: "spring", stiffness: 100 },
+    },
+  }
+
   return (
-    <div className="container px-4 py-12 md:py-16">
+    <div className="container px-4 py-12 md:py-24">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="mb-12"
+        className="text-center mb-12"
       >
-        <div className="flex items-center gap-3 mb-4">
-          <Code className="h-8 w-8 text-primary" />
-          <h1 className="text-4xl font-bold tracking-tight">Python</h1>
-        </div>
-        <p className="text-xl text-muted-foreground max-w-3xl">
-          Une référence complète de la syntaxe, des méthodes et des bonnes pratiques du langage Python
-        </p>
+        <motion.div
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="inline-block mb-4"
+        >
+          <div className="p-3 rounded-full bg-primary/10 animate-pulse-slow">
+            <Code className="h-16 w-16 text-primary" />
+          </div>
+        </motion.div>
+        <motion.h1
+          className="text-4xl md:text-5xl font-bold tracking-tight mb-4 gradient-text"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.7, delay: 0.4 }}
+        >
+          Langage Python
+        </motion.h1>
+        <motion.p
+          className="text-xl text-muted-foreground max-w-3xl mx-auto"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.7, delay: 0.6 }}
+        >
+          L'essentiel du langage Python: syntaxe, fonctions et exemples
+        </motion.p>
       </motion.div>
 
       <motion.div
@@ -281,7 +659,7 @@ export default function PythonLanguagePage() {
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
             type="search"
-            placeholder="Rechercher la syntaxe..."
+            placeholder="Rechercher..."
             className="pl-10"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -289,64 +667,211 @@ export default function PythonLanguagePage() {
         </div>
       </motion.div>
 
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3, duration: 0.5 }}>
-        <Accordion type="single" collapsible className="w-full" defaultValue="basic">
-          {categories.map((category, index) => {
-            const categoryItems = filteredItems.filter((item) => item.category === category.id)
+      <Tabs defaultValue="print" className="w-full">
+        <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 mb-8">
+          <TabsTrigger
+            value="print"
+            className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+          >
+            Format print
+          </TabsTrigger>
+          <TabsTrigger
+            value="types"
+            className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+          >
+            Types de données
+          </TabsTrigger>
+          <TabsTrigger
+            value="control"
+            className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+          >
+            Structures de contrôle
+          </TabsTrigger>
+          <TabsTrigger
+            value="functions"
+            className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+          >
+            Fonctions communes
+          </TabsTrigger>
+          <TabsTrigger
+            value="memory"
+            className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+          >
+            Gestion mémoire
+          </TabsTrigger>
+        </TabsList>
 
-            if (categoryItems.length === 0) return null
+        <TabsContent value="print" className="mt-0">
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="grid gap-4 md:grid-cols-2 lg:grid-cols-3"
+          >
+            {filteredFormatSpecifiers.map((item, index) => (
+              <motion.div key={item.specifier} variants={itemVariants} className="h-full">
+                <Card className="h-full border-muted hover:border-primary/50 transition-all duration-300 animate-glow">
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-xl font-mono">{item.specifier}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <CardDescription className="text-sm mb-4">{item.description}</CardDescription>
+                    <CodeBlock code={item.example} language="python" />
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </motion.div>
+        </TabsContent>
 
-            return (
-              <motion.div
-                key={category.id}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 + index * 0.1, duration: 0.5 }}
-              >
-                <AccordionItem value={category.id} className="border-b">
-                  <AccordionTrigger className="hover:no-underline">
-                    <div className="flex items-center gap-2">
-                      <span className="text-lg font-medium">{category.name}</span>
-                      <Badge variant="outline" className="ml-2">
-                        {categoryItems.length}
+        <TabsContent value="types" className="mt-0">
+          <Card className="animate-glow">
+            <CardHeader>
+              <CardTitle>Types de données en Python</CardTitle>
+              <CardDescription>
+                Les types de données fondamentaux en Python avec leurs caractéristiques et opérations
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="overflow-x-auto">
+                <table className="w-full border-collapse">
+                  <thead>
+                    <tr className="border-b border-border">
+                      <th className="text-left py-2 px-4 font-medium">Type</th>
+                      <th className="text-left py-2 px-4 font-medium">Description</th>
+                      <th className="text-left py-2 px-4 font-medium">Exemple</th>
+                      <th className="text-left py-2 px-4 font-medium">Opérations</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredDataTypes.map((type, index) => (
+                      <motion.tr
+                        key={type.type}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.05, duration: 0.3 }}
+                        className={index % 2 === 0 ? "bg-muted/30" : ""}
+                      >
+                        <td className="py-2 px-4 font-mono">{type.type}</td>
+                        <td className="py-2 px-4">{type.description}</td>
+                        <td className="py-2 px-4">
+                          <code className="bg-muted px-1 py-0.5 rounded text-sm font-mono">{type.example}</code>
+                        </td>
+                        <td className="py-2 px-4 text-sm">{type.operations}</td>
+                      </motion.tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="control" className="mt-0">
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="grid gap-4 md:grid-cols-2"
+          >
+            {filteredControlStructures.map((item, index) => (
+              <motion.div key={item.name} variants={itemVariants} className="h-full">
+                <Card className="h-full border-muted hover:border-primary/50 transition-all duration-300 animate-glow">
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-xl font-mono">{item.name}</CardTitle>
+                    <CardDescription className="text-sm">{item.description}</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <CodeBlock code={item.example} language="python" />
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </motion.div>
+        </TabsContent>
+
+        <TabsContent value="functions" className="mt-0">
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="grid gap-4 md:grid-cols-2 lg:grid-cols-3"
+          >
+            {filteredCommonFunctions.map((item, index) => (
+              <motion.div key={item.name} variants={itemVariants} className="h-full">
+                <Card className="h-full border-muted hover:border-primary/50 transition-all duration-300 animate-glow">
+                  <CardHeader className="pb-2">
+                    <div className="flex justify-between items-start">
+                      <CardTitle className="text-xl font-mono">{item.name}</CardTitle>
+                      <Badge variant="outline" className="font-mono">
+                        {item.module}
                       </Badge>
                     </div>
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2">
-                      {categoryItems.map((item, itemIndex) => (
-                        <motion.div
-                          key={`${category.id}-${itemIndex}`}
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.1 + itemIndex * 0.05, duration: 0.3 }}
-                        >
-                          <Card className="h-full border-muted/40 hover:border-primary/40 transition-colors">
-                            <CardHeader className="p-4 pb-2">
-                              <div className="flex justify-between items-start">
-                                <CardTitle className="text-lg font-mono">{item.name}</CardTitle>
-                              </div>
-                            </CardHeader>
-                            <CardContent className="p-4 pt-2">
-                              <CardDescription className="text-sm text-foreground/80 mb-4">
-                                {item.description}
-                              </CardDescription>
-                              <div className="mt-4 pt-2 border-t border-border/50">
-                                <p className="text-xs font-medium text-muted-foreground mb-2">Exemple:</p>
-                                <CodeBlock code={item.example} language="python" className="mt-1" />
-                              </div>
-                            </CardContent>
-                          </Card>
-                        </motion.div>
-                      ))}
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
+                    <CardDescription className="text-sm">{item.description}</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <CodeBlock code={item.example} language="python" />
+                  </CardContent>
+                </Card>
               </motion.div>
-            )
-          })}
-        </Accordion>
-      </motion.div>
+            ))}
+          </motion.div>
+        </TabsContent>
+
+        <TabsContent value="memory" className="mt-0">
+          <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-6">
+            <motion.div variants={itemVariants} className="mb-6">
+              <Card className="border-primary/20 animate-glow">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="h-5 w-5 text-primary"
+                    >
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <path d="M12 16v-4"></path>
+                      <path d="M12 8h.01"></path>
+                    </svg>
+                    Gestion de la mémoire en Python
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <ul className="list-disc pl-5 space-y-2">
+                    <li>Python utilise un ramasse-miettes automatique pour gérer la mémoire</li>
+                    <li>Le comptage de références est le mécanisme principal de gestion de la mémoire</li>
+                    <li>Un collecteur générationnel détecte et nettoie les cycles de références</li>
+                    <li>Les objets sont automatiquement libérés lorsqu'ils ne sont plus référencés</li>
+                    <li>Utilisez des gestionnaires de contexte (with) pour gérer les ressources</li>
+                    <li>Les références faibles (weakref) peuvent aider à éviter les cycles de références</li>
+                  </ul>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {filteredMemoryExamples.map((item, index) => (
+              <motion.div key={item.title} variants={itemVariants} className="h-full">
+                <Card className="border-muted hover:border-primary/50 transition-all duration-300 animate-glow">
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-xl">{item.title}</CardTitle>
+                    <CardDescription className="text-sm">{item.description}</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <CodeBlock code={item.example} language="python" />
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </motion.div>
+        </TabsContent>
+      </Tabs>
     </div>
   )
 }
