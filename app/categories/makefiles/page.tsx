@@ -1,13 +1,10 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { useLanguage } from "@/contexts/language-context"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 export default function MakefilesPage() {
-  const { t, language } = useLanguage()
-
   // Extend CodeBlock to support Makefile syntax
   const MakefileCodeBlock = ({ code, className }: { code: string; className?: string }) => {
     // Custom highlighting for Makefiles
@@ -29,7 +26,7 @@ export default function MakefilesPage() {
 
         // Variable usage
         processedLine = processedLine.replace(
-          /(\$$[a-zA-Z0-9_]+$$)/g,
+          /(\$$$[a-zA-Z0-9_]+$$)/g,
           '<span class="text-green-500 dark:text-green-300">$1</span>',
         )
 
@@ -218,25 +215,25 @@ UNAME := $(shell uname)
 
 # Set variables based on OS
 ifeq ($(UNAME), Linux)
-    CC = gcc
-    CFLAGS = -Wall -g
-    LDFLAGS = -lm
+  CC = gcc
+  CFLAGS = -Wall -g
+  LDFLAGS = -lm
 else ifeq ($(UNAME), Darwin)
-    CC = clang
-    CFLAGS = -Wall -g
-    LDFLAGS = -lm
+  CC = clang
+  CFLAGS = -Wall -g
+  LDFLAGS = -lm
 else
-    CC = gcc
-    CFLAGS = -Wall -g
-    LDFLAGS =
+  CC = gcc
+  CFLAGS = -Wall -g
+  LDFLAGS =
 endif
 
 # Debug build?
 DEBUG ?= 1
 ifeq ($(DEBUG), 1)
-    CFLAGS += -DDEBUG -g
+  CFLAGS += -DDEBUG -g
 else
-    CFLAGS += -DNDEBUG -O2
+  CFLAGS += -DNDEBUG -O2
 endif
 
 # Source files
@@ -271,42 +268,34 @@ clean:
         transition={{ duration: 0.5 }}
         className="text-center mb-12"
       >
-        <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
-          {language === "fr" ? "Makefiles" : "Makefiles"}
-        </h1>
+        <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">Makefiles</h1>
         <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-          {language === "fr"
-            ? "Guide complet des Makefiles: syntaxe, templates et bonnes pratiques pour automatiser vos builds."
-            : "Complete guide to Makefiles: syntax, templates, and best practices for automating your builds."}
+          Guide complet des Makefiles: syntaxe, templates et bonnes pratiques pour automatiser vos builds.
         </p>
       </motion.div>
 
       <Tabs defaultValue="syntax" className="mb-12">
         <TabsList className="grid w-full grid-cols-4 mb-8">
-          <TabsTrigger value="syntax">{language === "fr" ? "Syntaxe" : "Syntax"}</TabsTrigger>
-          <TabsTrigger value="templates">{language === "fr" ? "Templates" : "Templates"}</TabsTrigger>
-          <TabsTrigger value="variables">{language === "fr" ? "Variables" : "Variables"}</TabsTrigger>
-          <TabsTrigger value="functions">{language === "fr" ? "Fonctions" : "Functions"}</TabsTrigger>
+          <TabsTrigger value="syntax">Syntaxe</TabsTrigger>
+          <TabsTrigger value="templates">Templates</TabsTrigger>
+          <TabsTrigger value="variables">Variables</TabsTrigger>
+          <TabsTrigger value="functions">Fonctions</TabsTrigger>
         </TabsList>
 
         <TabsContent value="syntax" className="space-y-8">
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
             <Card>
               <CardHeader>
-                <CardTitle>{language === "fr" ? "Structure de base" : "Basic Structure"}</CardTitle>
+                <CardTitle>Structure de base</CardTitle>
                 <CardDescription>
-                  {language === "fr"
-                    ? "La structure fondamentale d'un Makefile avec règles, cibles et commandes"
-                    : "The fundamental structure of a Makefile with rules, targets, and commands"}
+                  La structure fondamentale d'un Makefile avec règles, cibles et commandes
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
-                  <h3 className="text-lg font-medium">{language === "fr" ? "Règle de base" : "Basic Rule"}</h3>
+                  <h3 className="text-lg font-medium">Règle de base</h3>
                   <p className="text-muted-foreground">
-                    {language === "fr"
-                      ? "Une règle définit comment construire une cible à partir de ses dépendances."
-                      : "A rule defines how to build a target from its dependencies."}
+                    Une règle définit comment construire une cible à partir de ses dépendances.
                   </p>
                   <MakefileCodeBlock
                     code={`target: dependency1 dependency2
@@ -316,12 +305,8 @@ clean:
                 </div>
 
                 <div className="space-y-2">
-                  <h3 className="text-lg font-medium">{language === "fr" ? "Cibles spéciales" : "Special Targets"}</h3>
-                  <p className="text-muted-foreground">
-                    {language === "fr"
-                      ? "Les cibles spéciales modifient le comportement de make."
-                      : "Special targets modify the behavior of make."}
-                  </p>
+                  <h3 className="text-lg font-medium">Cibles spéciales</h3>
+                  <p className="text-muted-foreground">Les cibles spéciales modifient le comportement de make.</p>
                   <MakefileCodeBlock
                     code={`.PHONY: all clean install
 .DEFAULT_GOAL := all
@@ -337,12 +322,8 @@ install: program
                 </div>
 
                 <div className="space-y-2">
-                  <h3 className="text-lg font-medium">{language === "fr" ? "Règles implicites" : "Implicit Rules"}</h3>
-                  <p className="text-muted-foreground">
-                    {language === "fr"
-                      ? "Make a des règles implicites pour les opérations courantes."
-                      : "Make has implicit rules for common operations."}
-                  </p>
+                  <h3 className="text-lg font-medium">Règles implicites</h3>
+                  <p className="text-muted-foreground">Make a des règles implicites pour les opérations courantes.</p>
                   <MakefileCodeBlock
                     code={`# Règle implicite pour compiler un fichier .c en .o
 %.o: %.c
@@ -359,37 +340,31 @@ main.o: main.c header.h`}
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1, duration: 0.5 }}>
             <Card>
               <CardHeader>
-                <CardTitle>{language === "fr" ? "Syntaxe avancée" : "Advanced Syntax"}</CardTitle>
-                <CardDescription>
-                  {language === "fr"
-                    ? "Fonctionnalités avancées pour des Makefiles plus puissants"
-                    : "Advanced features for more powerful Makefiles"}
-                </CardDescription>
+                <CardTitle>Syntaxe avancée</CardTitle>
+                <CardDescription>Fonctionnalités avancées pour des Makefiles plus puissants</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
-                  <h3 className="text-lg font-medium">{language === "fr" ? "Conditions" : "Conditionals"}</h3>
+                  <h3 className="text-lg font-medium">Conditions</h3>
                   <MakefileCodeBlock
                     code={`# Vérification de la valeur d'une variable
 ifeq ($(DEBUG), yes)
-    CFLAGS += -g -DDEBUG
+  CFLAGS += -g -DDEBUG
 else
-    CFLAGS += -O2
+  CFLAGS += -O2
 endif
 
 # Vérification de l'existence d'une commande
 ifneq ($(shell which clang),)
-    CC = clang
+  CC = clang
 else
-    CC = gcc
+  CC = gcc
 endif`}
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <h3 className="text-lg font-medium">
-                    {language === "fr" ? "Inclure d'autres Makefiles" : "Including Other Makefiles"}
-                  </h3>
+                  <h3 className="text-lg font-medium">Inclure d'autres Makefiles</h3>
                   <MakefileCodeBlock
                     code={`# Inclure un autre Makefile
 include config.mk
@@ -403,7 +378,7 @@ include $(wildcard modules/*.mk)`}
                 </div>
 
                 <div className="space-y-2">
-                  <h3 className="text-lg font-medium">{language === "fr" ? "Règles à motifs" : "Pattern Rules"}</h3>
+                  <h3 className="text-lg font-medium">Règles à motifs</h3>
                   <MakefileCodeBlock
                     code={`# Règle à motif pour convertir des fichiers .c en .o
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
@@ -423,12 +398,8 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
             <Card>
               <CardHeader>
-                <CardTitle>{language === "fr" ? "Makefile simple" : "Simple Makefile"}</CardTitle>
-                <CardDescription>
-                  {language === "fr"
-                    ? "Template de base pour un petit projet C"
-                    : "Basic template for a small C project"}
-                </CardDescription>
+                <CardTitle>Makefile simple</CardTitle>
+                <CardDescription>Template de base pour un petit projet C</CardDescription>
               </CardHeader>
               <CardContent>
                 <MakefileCodeBlock code={basicMakefile} />
@@ -439,12 +410,8 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1, duration: 0.5 }}>
             <Card>
               <CardHeader>
-                <CardTitle>{language === "fr" ? "Makefile avancé" : "Advanced Makefile"}</CardTitle>
-                <CardDescription>
-                  {language === "fr"
-                    ? "Template pour un projet plus complexe avec dépendances automatiques"
-                    : "Template for a more complex project with automatic dependencies"}
-                </CardDescription>
+                <CardTitle>Makefile avancé</CardTitle>
+                <CardDescription>Template pour un projet plus complexe avec dépendances automatiques</CardDescription>
               </CardHeader>
               <CardContent>
                 <MakefileCodeBlock code={advancedMakefile} />
@@ -455,12 +422,8 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2, duration: 0.5 }}>
             <Card>
               <CardHeader>
-                <CardTitle>{language === "fr" ? "Makefile pour bibliothèque" : "Library Makefile"}</CardTitle>
-                <CardDescription>
-                  {language === "fr"
-                    ? "Template pour construire une bibliothèque partagée"
-                    : "Template for building a shared library"}
-                </CardDescription>
+                <CardTitle>Makefile pour bibliothèque</CardTitle>
+                <CardDescription>Template pour construire une bibliothèque partagée</CardDescription>
               </CardHeader>
               <CardContent>
                 <MakefileCodeBlock code={libraryMakefile} />
@@ -471,12 +434,8 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3, duration: 0.5 }}>
             <Card>
               <CardHeader>
-                <CardTitle>{language === "fr" ? "Makefile avec conditions" : "Conditional Makefile"}</CardTitle>
-                <CardDescription>
-                  {language === "fr"
-                    ? "Template avec logique conditionnelle pour différentes plateformes"
-                    : "Template with conditional logic for different platforms"}
-                </CardDescription>
+                <CardTitle>Makefile avec conditions</CardTitle>
+                <CardDescription>Template avec logique conditionnelle pour différentes plateformes</CardDescription>
               </CardHeader>
               <CardContent>
                 <MakefileCodeBlock code={conditionalMakefile} />
@@ -489,18 +448,12 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
             <Card>
               <CardHeader>
-                <CardTitle>{language === "fr" ? "Types de variables" : "Variable Types"}</CardTitle>
-                <CardDescription>
-                  {language === "fr"
-                    ? "Différentes façons de définir des variables dans un Makefile"
-                    : "Different ways to define variables in a Makefile"}
-                </CardDescription>
+                <CardTitle>Types de variables</CardTitle>
+                <CardDescription>Différentes façons de définir des variables dans un Makefile</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
-                  <h3 className="text-lg font-medium">
-                    {language === "fr" ? "Affectation simple" : "Simple Assignment"}
-                  </h3>
+                  <h3 className="text-lg font-medium">Affectation simple</h3>
                   <MakefileCodeBlock
                     code={`# Affectation immédiate (évaluée au moment de la définition)
 CC = gcc
@@ -519,9 +472,7 @@ CFLAGS += -O2`}
                 </div>
 
                 <div className="space-y-2">
-                  <h3 className="text-lg font-medium">
-                    {language === "fr" ? "Variables automatiques" : "Automatic Variables"}
-                  </h3>
+                  <h3 className="text-lg font-medium">Variables automatiques</h3>
                   <MakefileCodeBlock
                     code={`target: dependency1 dependency2
 \t# $@ - Le nom de la cible
@@ -533,9 +484,7 @@ CFLAGS += -O2`}
                 </div>
 
                 <div className="space-y-2">
-                  <h3 className="text-lg font-medium">
-                    {language === "fr" ? "Variables d'environnement" : "Environment Variables"}
-                  </h3>
+                  <h3 className="text-lg font-medium">Variables d'environnement</h3>
                   <MakefileCodeBlock
                     code={`# Utiliser une variable d'environnement avec une valeur par défaut
 CC ?= $(CC)
@@ -552,12 +501,8 @@ export PATH := $(PATH):$(shell pwd)/bin`}
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1, duration: 0.5 }}>
             <Card>
               <CardHeader>
-                <CardTitle>{language === "fr" ? "Variables prédéfinies" : "Predefined Variables"}</CardTitle>
-                <CardDescription>
-                  {language === "fr"
-                    ? "Variables standard reconnues par make"
-                    : "Standard variables recognized by make"}
-                </CardDescription>
+                <CardTitle>Variables prédéfinies</CardTitle>
+                <CardDescription>Variables standard reconnues par make</CardDescription>
               </CardHeader>
               <CardContent>
                 <MakefileCodeBlock
@@ -591,12 +536,8 @@ INSTALL_DATA = $(INSTALL) -m 644`}
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
             <Card>
               <CardHeader>
-                <CardTitle>{language === "fr" ? "Fonctions de texte" : "Text Functions"}</CardTitle>
-                <CardDescription>
-                  {language === "fr"
-                    ? "Fonctions pour manipuler du texte dans les Makefiles"
-                    : "Functions for manipulating text in Makefiles"}
-                </CardDescription>
+                <CardTitle>Fonctions de texte</CardTitle>
+                <CardDescription>Fonctions pour manipuler du texte dans les Makefiles</CardDescription>
               </CardHeader>
               <CardContent>
                 <MakefileCodeBlock
@@ -631,12 +572,8 @@ WORD_COUNT = $(words $(WORDS))         # Résultat: 3 (nombre de mots)`}
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1, duration: 0.5 }}>
             <Card>
               <CardHeader>
-                <CardTitle>{language === "fr" ? "Fonctions de fichiers" : "File Functions"}</CardTitle>
-                <CardDescription>
-                  {language === "fr"
-                    ? "Fonctions pour travailler avec des fichiers et des chemins"
-                    : "Functions for working with files and paths"}
-                </CardDescription>
+                <CardTitle>Fonctions de fichiers</CardTitle>
+                <CardDescription>Fonctions pour travailler avec des fichiers et des chemins</CardDescription>
               </CardHeader>
               <CardContent>
                 <MakefileCodeBlock
@@ -665,12 +602,8 @@ PATHS = $(foreach dir,$(DIRS),$(dir)/*.c)  # Résultat: src/*.c include/*.c lib/
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2, duration: 0.5 }}>
             <Card>
               <CardHeader>
-                <CardTitle>{language === "fr" ? "Fonctions d'exécution" : "Execution Functions"}</CardTitle>
-                <CardDescription>
-                  {language === "fr"
-                    ? "Fonctions pour exécuter des commandes shell"
-                    : "Functions for executing shell commands"}
-                </CardDescription>
+                <CardTitle>Fonctions d'exécution</CardTitle>
+                <CardDescription>Fonctions pour exécuter des commandes shell</CardDescription>
               </CardHeader>
               <CardContent>
                 <MakefileCodeBlock
@@ -682,8 +615,8 @@ UNAME = $(shell uname -s)
 # Exécuter une commande et vérifier le résultat
 CHECK_LIB = $(shell pkg-config --exists libfoo && echo yes || echo no)
 ifeq ($(CHECK_LIB), yes)
-    CFLAGS += $(shell pkg-config --cflags libfoo)
-    LDLIBS += $(shell pkg-config --libs libfoo)
+  CFLAGS += $(shell pkg-config --cflags libfoo)
+  LDLIBS += $(shell pkg-config --libs libfoo)
 endif
 
 # Afficher un message pendant l'exécution
@@ -706,115 +639,53 @@ RESULT = $(eval TEMP := foo bar)$(TEMP)`}
         transition={{ duration: 0.5 }}
         className="mt-12"
       >
-        <h2 className="text-2xl md:text-3xl font-bold tracking-tight mb-6 text-center">
-          {language === "fr" ? "Bonnes pratiques" : "Best Practices"}
-        </h2>
+        <h2 className="text-2xl md:text-3xl font-bold tracking-tight mb-6 text-center">Bonnes pratiques</h2>
 
         <div className="grid gap-8 md:grid-cols-2">
           <Card>
             <CardHeader>
-              <CardTitle>{language === "fr" ? "Organisation" : "Organization"}</CardTitle>
+              <CardTitle>Organisation</CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
-              <p>
-                {language === "fr"
-                  ? "• Utilisez des variables pour tous les paramètres configurables"
-                  : "• Use variables for all configurable parameters"}
-              </p>
-              <p>
-                {language === "fr"
-                  ? "• Regroupez les variables liées en sections"
-                  : "• Group related variables into sections"}
-              </p>
-              <p>
-                {language === "fr"
-                  ? "• Utilisez des commentaires pour expliquer les sections complexes"
-                  : "• Use comments to explain complex sections"}
-              </p>
-              <p>
-                {language === "fr"
-                  ? "• Séparez les Makefiles en modules pour les grands projets"
-                  : "• Split Makefiles into modules for large projects"}
-              </p>
+              <p>• Utilisez des variables pour tous les paramètres configurables</p>
+              <p>• Regroupez les variables liées en sections</p>
+              <p>• Utilisez des commentaires pour expliquer les sections complexes</p>
+              <p>• Séparez les Makefiles en modules pour les grands projets</p>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader>
-              <CardTitle>{language === "fr" ? "Portabilité" : "Portability"}</CardTitle>
+              <CardTitle>Portabilité</CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
-              <p>
-                {language === "fr"
-                  ? "• Utilisez des commandes shell portables (sh, pas bash)"
-                  : "• Use portable shell commands (sh, not bash)"}
-              </p>
-              <p>
-                {language === "fr"
-                  ? "• Testez les commandes avec des conditions"
-                  : "• Test for commands with conditionals"}
-              </p>
-              <p>
-                {language === "fr"
-                  ? "• Utilisez des variables pour les chemins de fichiers"
-                  : "• Use variables for file paths"}
-              </p>
-              <p>
-                {language === "fr"
-                  ? "• Évitez les fonctionnalités spécifiques à GNU Make si possible"
-                  : "• Avoid GNU Make-specific features when possible"}
-              </p>
+              <p>• Utilisez des commandes shell portables (sh, pas bash)</p>
+              <p>• Testez les commandes avec des conditions</p>
+              <p>• Utilisez des variables pour les chemins de fichiers</p>
+              <p>• Évitez les fonctionnalités spécifiques à GNU Make si possible</p>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader>
-              <CardTitle>{language === "fr" ? "Performance" : "Performance"}</CardTitle>
+              <CardTitle>Performance</CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
-              <p>
-                {language === "fr"
-                  ? "• Utilisez des dépendances précises pour éviter les recompilations inutiles"
-                  : "• Use accurate dependencies to avoid unnecessary recompilations"}
-              </p>
-              <p>
-                {language === "fr"
-                  ? "• Utilisez la génération automatique de dépendances (-MMD -MP)"
-                  : "• Use automatic dependency generation (-MMD -MP)"}
-              </p>
-              <p>
-                {language === "fr"
-                  ? "• Utilisez make -j pour la compilation parallèle"
-                  : "• Use make -j for parallel compilation"}
-              </p>
-              <p>
-                {language === "fr"
-                  ? "• Évitez les appels shell inutiles dans les variables récursives"
-                  : "• Avoid unnecessary shell calls in recursive variables"}
-              </p>
+              <p>• Utilisez des dépendances précises pour éviter les recompilations inutiles</p>
+              <p>• Utilisez la génération automatique de dépendances (-MMD -MP)</p>
+              <p>• Utilisez make -j pour la compilation parallèle</p>
+              <p>• Évitez les appels shell inutiles dans les variables récursives</p>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader>
-              <CardTitle>{language === "fr" ? "Débogage" : "Debugging"}</CardTitle>
+              <CardTitle>Débogage</CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
-              <p>
-                {language === "fr"
-                  ? "• Utilisez make -n pour voir les commandes sans les exécuter"
-                  : "• Use make -n to see commands without executing them"}
-              </p>
-              <p>
-                {language === "fr"
-                  ? "• Utilisez $(info ...) pour afficher des informations de débogage"
-                  : "• Use $(info ...) to print debugging information"}
-              </p>
-              <p>
-                {language === "fr"
-                  ? '• Créez une cible "debug" pour afficher les variables'
-                  : '• Create a "debug" target to print variables'}
-              </p>
+              <p>• Utilisez make -n pour voir les commandes sans les exécuter</p>
+              <p>• Utilisez $(info ...) pour afficher des informations de débogage</p>
+              <p>• Créez une cible "debug" pour afficher les variables</p>
               <MakefileCodeBlock
                 code={`debug:
 \t@echo "SOURCES: $(SOURCES)"

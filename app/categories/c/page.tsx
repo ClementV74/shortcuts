@@ -8,79 +8,77 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
-import { useLanguage } from "@/contexts/language-context"
 import CodeBlock from "@/components/code-block"
 
 export default function CLanguagePage() {
-  const { language } = useLanguage()
   const [searchQuery, setSearchQuery] = useState("")
 
   // Format specifiers for printf/scanf
   const formatSpecifiers = [
     {
       specifier: "%d",
-      description: language === "fr" ? "Entier signé (int)" : "Signed integer (int)",
-      example: 'printf("Valeur: %d\\n", 42);',
+      description: "Entier signé (int)",
+      example: 'printf("Valeur: %d\n", 42);',
     },
     {
       specifier: "%u",
-      description: language === "fr" ? "Entier non signé (unsigned int)" : "Unsigned integer (unsigned int)",
-      example: 'printf("Valeur: %u\\n", 42u);',
+      description: "Entier non signé (unsigned int)",
+      example: 'printf("Valeur: %u\n", 42u);',
     },
     {
       specifier: "%f",
-      description: language === "fr" ? "Nombre à virgule flottante (float, double)" : "Floating point (float, double)",
-      example: 'printf("Valeur: %f\\n", 3.14159);',
+      description: "Nombre à virgule flottante (float, double)",
+      example: 'printf("Valeur: %f\n", 3.14159);',
     },
     {
       specifier: "%e",
-      description: language === "fr" ? "Notation scientifique" : "Scientific notation",
-      example: 'printf("Valeur: %e\\n", 3.14159);',
+      description: "Notation scientifique",
+      example: 'printf("Valeur: %e\n", 3.14159);',
     },
     {
       specifier: "%g",
-      description: language === "fr" ? "Utilise %f ou %e selon la valeur" : "Uses %f or %e depending on value",
-      example: 'printf("Valeur: %g\\n", 0.000123);',
+      description: "Utilise %f ou %e selon la valeur",
+      example: 'printf("Valeur: %g\n", 0.000123);',
     },
     {
       specifier: "%c",
-      description: language === "fr" ? "Caractère" : "Character",
-      example: "printf(\"Caractère: %c\\n\", 'A');",
+      description: "Caractère",
+      example: "printf(\"Caractère: %c\n\", 'A');",
     },
     {
       specifier: "%s",
-      description: language === "fr" ? "Chaîne de caractères" : "String",
-      example: 'printf("Texte: %s\\n", "Hello");',
+      description: "Chaîne de caractères",
+      example: 'printf("Texte: %s\n", "Hello");',
     },
     {
       specifier: "%p",
-      description: language === "fr" ? "Adresse mémoire (pointeur)" : "Memory address (pointer)",
-      example: 'printf("Adresse: %p\\n", &variable);',
+      description: "Adresse mémoire (pointeur)",
+      example: 'printf("Adresse: %p\n", &variable);',
     },
     {
       specifier: "%x",
-      description: language === "fr" ? "Hexadécimal (minuscules)" : "Hexadecimal (lowercase)",
-      example: 'printf("Hex: %x\\n", 255);',
+      description: "Hexadécimal (minuscules)",
+      example: 'printf("Hex: %x\n", 255);',
     },
     {
       specifier: "%X",
-      description: language === "fr" ? "Hexadécimal (majuscules)" : "Hexadecimal (uppercase)",
-      example: 'printf("Hex: %X\\n", 255);',
+      description: "Hexadécimal (majuscules)",
+      example: 'printf("Hex: %X\n", 255);',
     },
     {
       specifier: "%o",
-      description: language === "fr" ? "Octal" : "Octal",
-      example: 'printf("Octal: %o\\n", 64);',
+      description: "Octal",
+      example: 'printf("Octal: %o\n", 64);',
     },
     {
       specifier: "%.nf",
-      description: language === "fr" ? "Flottant avec n décimales" : "Float with n decimal places",
-      example: 'printf("Pi: %.2f\\n", 3.14159);',
+      description: "Flottant avec n décimales",
+      example: 'printf("Pi: %.2f\n", 3.14159);',
     },
     {
       specifier: "%n$",
-      description: language === "fr" ? "Accès positionnel aux arguments" : "Positional access to arguments",
-      example: 'printf("%2$s %1$s\\n", "second", "first");',
+      description: "Accès positionnel aux arguments",
+      example: 'printf("%2$s %1$s\n", "second", "first");',
     },
   ]
 
@@ -89,7 +87,7 @@ export default function CLanguagePage() {
     {
       type: "char",
       size: "1 byte",
-      range: language === "fr" ? "-128 à 127 ou 0 à 255" : "-128 to 127 or 0 to 255",
+      range: "-128 à 127 ou 0 à 255",
       example: "char c = 'A';",
     },
     {
@@ -101,7 +99,7 @@ export default function CLanguagePage() {
     {
       type: "short",
       size: "2 bytes",
-      range: language === "fr" ? "-32,768 à 32,767" : "-32,768 to 32,767",
+      range: "-32,768 à 32,767",
       example: "short s = 32767;",
     },
     {
@@ -113,7 +111,7 @@ export default function CLanguagePage() {
     {
       type: "int",
       size: "4 bytes",
-      range: language === "fr" ? "-2,147,483,648 à 2,147,483,647" : "-2,147,483,648 to 2,147,483,647",
+      range: "-2,147,483,648 à 2,147,483,647",
       example: "int i = 42;",
     },
     {
@@ -125,40 +123,37 @@ export default function CLanguagePage() {
     {
       type: "long",
       size: "4 or 8 bytes",
-      range: language === "fr" ? "Dépend de la plateforme" : "Platform dependent",
+      range: "Dépend de la plateforme",
       example: "long l = 2147483647L;",
     },
     {
       type: "unsigned long",
       size: "4 or 8 bytes",
-      range: language === "fr" ? "Dépend de la plateforme" : "Platform dependent",
+      range: "Dépend de la plateforme",
       example: "unsigned long l = 4294967295UL;",
     },
     {
       type: "long long",
       size: "8 bytes",
-      range:
-        language === "fr"
-          ? "-9,223,372,036,854,775,808 à 9,223,372,036,854,775,807"
-          : "-9,223,372,036,854,775,808 to 9,223,372,036,854,775,807",
+      range: "-9,223,372,036,854,775,808 à 9,223,372,036,854,775,807",
       example: "long long ll = 9223372036854775807LL;",
     },
     {
       type: "float",
       size: "4 bytes",
-      range: language === "fr" ? "±3.4E±38 (6-7 chiffres significatifs)" : "±3.4E±38 (6-7 significant digits)",
+      range: "±3.4E±38 (6-7 chiffres significatifs)",
       example: "float f = 3.14159f;",
     },
     {
       type: "double",
       size: "8 bytes",
-      range: language === "fr" ? "±1.7E±308 (15-16 chiffres significatifs)" : "±1.7E±308 (15-16 significant digits)",
+      range: "±1.7E±308 (15-16 chiffres significatifs)",
       example: "double d = 3.14159265358979;",
     },
     {
       type: "long double",
       size: "8, 12, or 16 bytes",
-      range: language === "fr" ? "Dépend de la plateforme" : "Platform dependent",
+      range: "Dépend de la plateforme",
       example: "long double ld = 3.14159265358979L;",
     },
     {
@@ -173,7 +168,7 @@ export default function CLanguagePage() {
   const controlStructures = [
     {
       name: "if-else",
-      description: language === "fr" ? "Exécution conditionnelle" : "Conditional execution",
+      description: "Exécution conditionnelle",
       example: `if (x > 0) {
   printf("Positif\\n");
 } else if (x < 0) {
@@ -184,29 +179,29 @@ export default function CLanguagePage() {
     },
     {
       name: "switch",
-      description: language === "fr" ? "Sélection multi-voies" : "Multi-way selection",
+      description: "Sélection multi-voies",
       example: `switch (day) {
-  case 1:
-    printf("Lundi\\n");
-    break;
-  case 2:
-    printf("Mardi\\n");
-    break;
-  default:
-    printf("Autre jour\\n");
-    break;
+case 1:
+  printf("Lundi\\n");
+  break;
+case 2:
+  printf("Mardi\\n");
+  break;
+default:
+  printf("Autre jour\\n");
+  break;
 }`,
     },
     {
       name: "for",
-      description: language === "fr" ? "Boucle avec compteur" : "Counter-based loop",
+      description: "Boucle avec compteur",
       example: `for (int i = 0; i < 10; i++) {
   printf("%d\\n", i);
 }`,
     },
     {
       name: "while",
-      description: language === "fr" ? "Boucle conditionnelle" : "Conditional loop",
+      description: "Boucle conditionnelle",
       example: `while (count > 0) {
   printf("%d\\n", count);
   count--;
@@ -214,10 +209,7 @@ export default function CLanguagePage() {
     },
     {
       name: "do-while",
-      description:
-        language === "fr"
-          ? "Boucle conditionnelle (exécutée au moins une fois)"
-          : "Conditional loop (executed at least once)",
+      description: "Boucle conditionnelle (exécutée au moins une fois)",
       example: `do {
   printf("%d\\n", count);
   count--;
@@ -225,7 +217,7 @@ export default function CLanguagePage() {
     },
     {
       name: "break",
-      description: language === "fr" ? "Sortir d'une boucle ou d'un switch" : "Exit a loop or switch",
+      description: "Sortir d'une boucle ou d'un switch",
       example: `for (int i = 0; i < 10; i++) {
   if (i == 5) {
     break;  // Sortie de la boucle
@@ -235,7 +227,7 @@ export default function CLanguagePage() {
     },
     {
       name: "continue",
-      description: language === "fr" ? "Passer à l'itération suivante" : "Skip to next iteration",
+      description: "Passer à l'itération suivante",
       example: `for (int i = 0; i < 10; i++) {
   if (i % 2 == 0) {
     continue;  // Passer à l'itération suivante
@@ -245,7 +237,7 @@ export default function CLanguagePage() {
     },
     {
       name: "goto",
-      description: language === "fr" ? "Saut inconditionnel (à éviter)" : "Unconditional jump (avoid using)",
+      description: "Saut inconditionnel (à éviter)",
       example: `int i = 0;
 start:
   printf("%d\\n", i);
@@ -261,47 +253,46 @@ start:
     {
       name: "printf",
       header: "stdio.h",
-      description: language === "fr" ? "Afficher du texte formaté" : "Print formatted text",
+      description: "Afficher du texte formaté",
       example: `printf("Hello, %s! You are %d years old.\\n", name, age);`,
     },
     {
       name: "scanf",
       header: "stdio.h",
-      description: language === "fr" ? "Lire des entrées formatées" : "Read formatted input",
+      description: "Lire des entrées formatées",
       example: `int age;
 scanf("%d", &age);`,
     },
     {
       name: "fgets",
       header: "stdio.h",
-      description:
-        language === "fr" ? "Lire une ligne de texte (plus sûr que gets)" : "Read a line of text (safer than gets)",
+      description: "Lire une ligne de texte (plus sûr que gets)",
       example: `char buffer[100];
 fgets(buffer, sizeof(buffer), stdin);`,
     },
     {
       name: "strlen",
       header: "string.h",
-      description: language === "fr" ? "Calculer la longueur d'une chaîne" : "Calculate string length",
+      description: "Calculer la longueur d'une chaîne",
       example: `size_t length = strlen(str);`,
     },
     {
       name: "strcpy",
       header: "string.h",
-      description: language === "fr" ? "Copier une chaîne" : "Copy a string",
+      description: "Copier une chaîne",
       example: `char dest[100];
 strcpy(dest, source);`,
     },
     {
       name: "strcat",
       header: "string.h",
-      description: language === "fr" ? "Concaténer des chaînes" : "Concatenate strings",
+      description: "Concaténer des chaînes",
       example: `strcat(dest, source);  // Ajoute source à la fin de dest`,
     },
     {
       name: "strcmp",
       header: "string.h",
-      description: language === "fr" ? "Comparer des chaînes" : "Compare strings",
+      description: "Comparer des chaînes",
       example: `if (strcmp(str1, str2) == 0) {
   printf("Les chaînes sont identiques\\n");
 }`,
@@ -309,31 +300,31 @@ strcpy(dest, source);`,
     {
       name: "malloc",
       header: "stdlib.h",
-      description: language === "fr" ? "Allouer de la mémoire" : "Allocate memory",
+      description: "Allouer de la mémoire",
       example: `int* arr = (int*)malloc(10 * sizeof(int));`,
     },
     {
       name: "free",
       header: "stdlib.h",
-      description: language === "fr" ? "Libérer la mémoire allouée" : "Free allocated memory",
+      description: "Libérer la mémoire allouée",
       example: `free(arr);`,
     },
     {
       name: "exit",
       header: "stdlib.h",
-      description: language === "fr" ? "Terminer le programme" : "Terminate the program",
+      description: "Terminer le programme",
       example: `exit(EXIT_SUCCESS);  // ou exit(0)`,
     },
     {
       name: "fopen",
       header: "stdio.h",
-      description: language === "fr" ? "Ouvrir un fichier" : "Open a file",
+      description: "Ouvrir un fichier",
       example: `FILE* file = fopen("data.txt", "r");  // "r" pour lecture`,
     },
     {
       name: "fclose",
       header: "stdio.h",
-      description: language === "fr" ? "Fermer un fichier" : "Close a file",
+      description: "Fermer un fichier",
       example: `fclose(file);`,
     },
   ]
@@ -341,73 +332,66 @@ strcpy(dest, source);`,
   // Memory management examples
   const memoryExamples = [
     {
-      title: language === "fr" ? "Allocation dynamique d'un tableau" : "Dynamic array allocation",
-      description:
-        language === "fr"
-          ? "Allouer un tableau d'entiers et le libérer correctement"
-          : "Allocate an array of integers and free it properly",
+      title: "Allocation dynamique d'un tableau",
+      description: "Allouer un tableau d'entiers et le libérer correctement",
       example: `#include <stdio.h>
 #include <stdlib.h>
 
 int main() {
   int size = 5;
-  
+
   // Allocation
   int* arr = (int*)malloc(size * sizeof(int));
-  
+
   // Vérification
   if (arr == NULL) {
     printf("Erreur d'allocation\\n");
     return 1;
   }
-  
+
   // Utilisation
   for (int i = 0; i < size; i++) {
     arr[i] = i * 10;
     printf("%d\\n", arr[i]);
   }
-  
+
   // Libération
   free(arr);
   arr = NULL;  // Bonne pratique
-  
+
   return 0;
 }`,
     },
     {
-      title: language === "fr" ? "Allocation d'une chaîne de caractères" : "String allocation",
-      description:
-        language === "fr" ? "Allouer de la mémoire pour une chaîne de caractères" : "Allocate memory for a string",
+      title: "Allocation d'une chaîne de caractères",
+      description: "Allouer de la mémoire pour une chaîne de caractères",
       example: `#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 int main() {
   const char* source = "Hello, World!";
-  
+
   // Allocation (+1 pour le caractère nul)
   char* str = (char*)malloc(strlen(source) + 1);
-  
+
   if (str == NULL) {
     return 1;
   }
-  
+
   // Copie
   strcpy(str, source);
   printf("%s\\n", str);
-  
+
   // Libération
   free(str);
-  
+
   return 0;
 }`,
     },
     {
-      title: language === "fr" ? "Structure dynamique" : "Dynamic structure",
-      description:
-        language === "fr"
-          ? "Allouer une structure et y accéder via un pointeur"
-          : "Allocate a structure and access it via pointer",
+      title: "Structure dynamique",
+      description: "Allouer une structure et y accéder via un pointeur",
       example: `#include <stdio.h>
 #include <stdlib.h>
 
@@ -419,26 +403,26 @@ typedef struct {
 int main() {
   // Allocation
   Person* person = (Person*)malloc(sizeof(Person));
-  
+
   if (person == NULL) {
     return 1;
   }
-  
+
   // Initialisation et accès
   strcpy(person->name, "John");
   person->age = 30;
-  
+
   printf("Name: %s, Age: %d\\n", person->name, person->age);
-  
+
   // Libération
   free(person);
-  
+
   return 0;
 }`,
     },
     {
-      title: language === "fr" ? "Tableau de structures" : "Array of structures",
-      description: language === "fr" ? "Allouer un tableau de structures" : "Allocate an array of structures",
+      title: "Tableau de structures",
+      description: "Allouer un tableau de structures",
       example: `#include <stdio.h>
 #include <stdlib.h>
 
@@ -449,32 +433,32 @@ typedef struct {
 
 int main() {
   int count = 3;
-  
+
   // Allocation
   Person* people = (Person*)malloc(count * sizeof(Person));
-  
+
   if (people == NULL) {
     return 1;
   }
-  
+
   // Initialisation
   strcpy(people[0].name, "Alice");
   people[0].age = 25;
-  
+
   strcpy(people[1].name, "Bob");
   people[1].age = 30;
-  
+
   strcpy(people[2].name, "Charlie");
   people[2].age = 35;
-  
+
   // Accès
   for (int i = 0; i < count; i++) {
     printf("%s: %d\\n", people[i].name, people[i].age);
   }
-  
+
   // Libération
   free(people);
-  
+
   return 0;
 }`,
     },
@@ -561,7 +545,7 @@ int main() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.7, delay: 0.4 }}
         >
-          {language === "fr" ? "Langage C" : "C Language"}
+          Langage C
         </motion.h1>
         <motion.p
           className="text-xl text-muted-foreground max-w-3xl mx-auto"
@@ -569,9 +553,7 @@ int main() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.7, delay: 0.6 }}
         >
-          {language === "fr"
-            ? "L'essentiel du langage C: syntaxe, fonctions et exemples"
-            : "The essentials of C language: syntax, functions, and examples"}
+          L'essentiel du langage C: syntaxe, fonctions et exemples
         </motion.p>
       </motion.div>
 
@@ -585,7 +567,7 @@ int main() {
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
             type="search"
-            placeholder={language === "fr" ? "Rechercher..." : "Search..."}
+            placeholder="Rechercher..."
             className="pl-10"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -599,31 +581,31 @@ int main() {
             value="printf"
             className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
           >
-            {language === "fr" ? "Format printf" : "Printf Format"}
+            Format printf
           </TabsTrigger>
           <TabsTrigger
             value="types"
             className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
           >
-            {language === "fr" ? "Types de données" : "Data Types"}
+            Types de données
           </TabsTrigger>
           <TabsTrigger
             value="control"
             className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
           >
-            {language === "fr" ? "Structures de contrôle" : "Control Structures"}
+            Structures de contrôle
           </TabsTrigger>
           <TabsTrigger
             value="functions"
             className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
           >
-            {language === "fr" ? "Fonctions communes" : "Common Functions"}
+            Fonctions communes
           </TabsTrigger>
           <TabsTrigger
             value="memory"
             className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
           >
-            {language === "fr" ? "Gestion mémoire" : "Memory Management"}
+            Gestion mémoire
           </TabsTrigger>
         </TabsList>
 
@@ -653,11 +635,9 @@ int main() {
         <TabsContent value="types" className="mt-0">
           <Card className="animate-glow">
             <CardHeader>
-              <CardTitle>{language === "fr" ? "Types de données en C" : "C Data Types"}</CardTitle>
+              <CardTitle>Types de données en C</CardTitle>
               <CardDescription>
-                {language === "fr"
-                  ? "Les types de données fondamentaux en C avec leur taille et plage de valeurs"
-                  : "Fundamental data types in C with their size and range of values"}
+                Les types de données fondamentaux en C avec leur taille et plage de valeurs
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -665,10 +645,10 @@ int main() {
                 <table className="w-full border-collapse">
                   <thead>
                     <tr className="border-b border-border">
-                      <th className="text-left py-2 px-4 font-medium">{language === "fr" ? "Type" : "Type"}</th>
-                      <th className="text-left py-2 px-4 font-medium">{language === "fr" ? "Taille" : "Size"}</th>
-                      <th className="text-left py-2 px-4 font-medium">{language === "fr" ? "Plage" : "Range"}</th>
-                      <th className="text-left py-2 px-4 font-medium">{language === "fr" ? "Exemple" : "Example"}</th>
+                      <th className="text-left py-2 px-4 font-medium">Type</th>
+                      <th className="text-left py-2 px-4 font-medium">Taille</th>
+                      <th className="text-left py-2 px-4 font-medium">Plage</th>
+                      <th className="text-left py-2 px-4 font-medium">Exemple</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -753,36 +733,16 @@ int main() {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Info className="h-5 w-5 text-primary" />
-                    {language === "fr" ? "Bonnes pratiques de gestion mémoire" : "Memory Management Best Practices"}
+                    Bonnes pratiques de gestion mémoire
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <ul className="list-disc pl-5 space-y-2">
-                    <li>
-                      {language === "fr"
-                        ? "Toujours vérifier le retour de malloc/calloc (NULL en cas d'échec)"
-                        : "Always check the return value of malloc/calloc (NULL on failure)"}
-                    </li>
-                    <li>
-                      {language === "fr"
-                        ? "Libérer la mémoire avec free() quand elle n'est plus nécessaire"
-                        : "Free memory with free() when it's no longer needed"}
-                    </li>
-                    <li>
-                      {language === "fr"
-                        ? "Mettre les pointeurs à NULL après les avoir libérés"
-                        : "Set pointers to NULL after freeing them"}
-                    </li>
-                    <li>
-                      {language === "fr"
-                        ? "Éviter les fuites de mémoire en libérant toute la mémoire allouée"
-                        : "Avoid memory leaks by freeing all allocated memory"}
-                    </li>
-                    <li>
-                      {language === "fr"
-                        ? "Attention aux dépassements de tampon (buffer overflows)"
-                        : "Be careful with buffer overflows"}
-                    </li>
+                    <li>Toujours vérifier le retour de malloc/calloc (NULL en cas d'échec)</li>
+                    <li>Libérer la mémoire avec free() quand elle n'est plus nécessaire</li>
+                    <li>Mettre les pointeurs à NULL après les avoir libérés</li>
+                    <li>Éviter les fuites de mémoire en libérant toute la mémoire allouée</li>
+                    <li>Attention aux dépassements de tampon (buffer overflows)</li>
                   </ul>
                 </CardContent>
               </Card>
@@ -816,17 +776,11 @@ int main() {
             <TooltipTrigger asChild>
               <div className="inline-flex items-center gap-2 text-sm text-muted-foreground bg-muted/50 px-4 py-2 rounded-full">
                 <Info className="h-4 w-4" />
-                {language === "fr"
-                  ? "Astuce: Utilisez la recherche pour filtrer le contenu"
-                  : "Tip: Use the search to filter content"}
+                Astuce: Utilisez la recherche pour filtrer le contenu
               </div>
             </TooltipTrigger>
             <TooltipContent>
-              <p>
-                {language === "fr"
-                  ? "La recherche fonctionne sur tous les onglets simultanément"
-                  : "Search works across all tabs simultaneously"}
-              </p>
+              <p>La recherche fonctionne sur tous les onglets simultanément</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
