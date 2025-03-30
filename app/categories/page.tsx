@@ -4,81 +4,78 @@ import { motion } from "framer-motion"
 import Link from "next/link"
 import { ArrowRight, Terminal, Command, Keyboard, Code, Zap, Monitor, FileCode, Coffee, File } from "lucide-react"
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { useLanguage } from "@/contexts/language-context"
 
 export default function CategoriesPage() {
-  const { t } = useLanguage()
-
   const categories = [
     {
-      title: t("category.vim"),
+      title: "Vim",
       icon: <Terminal className="h-8 w-8" />,
-      description: t("category.vim.desc"),
+      description: "Commandes et raccourcis de l'éditeur de texte",
       href: "/categories/vim",
       featured: true,
     },
     {
-      title: t("category.vscode"),
+      title: "VS Code",
       icon: <Command className="h-8 w-8" />,
-      description: t("category.vscode.desc"),
+      description: "Raccourcis Visual Studio Code",
       href: "/categories/vscode",
     },
     {
-      title: t("category.terminal"),
+      title: "Terminal",
       icon: <Keyboard className="h-8 w-8" />,
-      description: t("category.terminal.desc"),
+      description: "Commandes et utilisation du terminal Linux",
       href: "/categories/terminal",
     },
     {
-      title: t("category.git"),
+      title: "Git",
       icon: <Code className="h-8 w-8" />,
-      description: t("category.git.desc"),
+      description: "Commandes de contrôle de version",
       href: "/categories/git",
     },
     {
-      title: t("category.bash"),
+      title: "Bash",
       icon: <Zap className="h-8 w-8" />,
-      description: t("category.bash.desc"),
+      description: "Scripts et commandes Bash",
       href: "/categories/bash",
     },
     {
-      title: t("category.windowManagers"),
+      title: "Gestionnaires de Fenêtres",
       icon: <Monitor className="h-8 w-8" />,
-      description: t("category.windowManagers.desc"),
+      description: "Raccourcis des gestionnaires de fenêtres Linux",
       href: "/categories/window-managers",
     },
     {
-      title: t("category.c"),
+      title: "Langage C",
       icon: <FileCode className="h-8 w-8" />,
-      description: t("category.c.desc"),
+      description: "Syntaxe, méthodes et bonnes pratiques du C",
       href: "/categories/c",
       featured: true,
     },
     {
-      title: t("category.cpp"),
+      title: "C++",
       icon: <Code className="h-8 w-8" />,
-      description: t("category.cpp.desc"),
+      description: "Syntaxe, méthodes et bonnes pratiques du C++",
       href: "/categories/cpp",
       featured: true,
     },
     {
-      title: t("category.java"),
+      title: "Java",
       icon: <Coffee className="h-8 w-8" />,
-      description: t("category.java.desc"),
+      description: "Syntaxe, méthodes et bonnes pratiques de Java",
       href: "/categories/java",
       featured: true,
     },
     {
-      title: t("category.python"),
+      title: "Python",
       icon: <Code className="h-8 w-8" />,
-      description: t("category.python.desc"),
+      description: "Syntaxe, méthodes et bonnes pratiques de Python",
       href: "/categories/python",
       featured: true,
     },
     {
-      title: t("category.makefiles"),
+      title: "Makefiles",
       icon: <File className="h-8 w-8" />,
-      description: t("category.makefiles.desc"),
+      description: "Syntaxe, templates et bonnes pratiques pour automatiser les builds",
       href: "/categories/makefiles",
       featured: true,
     },
@@ -92,8 +89,10 @@ export default function CategoriesPage() {
         transition={{ duration: 0.5 }}
         className="text-center mb-12 md:mb-20"
       >
-        <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">{t("categories.title")}</h1>
-        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">{t("categories.subtitle")}</p>
+        <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">Toutes les Catégories</h1>
+        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          Parcourez notre collection complète de raccourcis clavier et commandes
+        </p>
       </motion.div>
 
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
@@ -121,7 +120,7 @@ export default function CategoriesPage() {
                 </CardHeader>
                 <CardFooter>
                   <div className="flex items-center text-sm">
-                    {t("home.explore")}
+                    Explorer
                     <ArrowRight className="ml-1 h-4 w-4" />
                   </div>
                 </CardFooter>

@@ -2,31 +2,22 @@
 
 import { motion } from "framer-motion"
 import Link from "next/link"
-import { useLanguage } from "@/contexts/language-context"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Code, Terminal, Coffee, FileCode, FileText, Cpu, Braces } from "lucide-react"
 
 export default function Home() {
-  const { t, language } = useLanguage()
-
   const categories = [
     {
-      title: language === "fr" ? "Vim" : "Vim",
-      description:
-        language === "fr"
-          ? "Commandes et raccourcis essentiels pour l'éditeur Vim"
-          : "Essential commands and shortcuts for the Vim editor",
+      title: "Vim",
+      description: "Commandes et raccourcis essentiels pour l'éditeur Vim",
       icon: <Code className="h-12 w-12 text-primary" />,
       href: "/categories/vim",
       color: "from-purple-500 to-indigo-500",
       delay: 0.1,
     },
     {
-      title: language === "fr" ? "Terminal" : "Terminal",
-      description:
-        language === "fr"
-          ? "Commandes Linux essentielles pour le terminal"
-          : "Essential Linux commands for the terminal",
+      title: "Terminal",
+      description: "Commandes Linux essentielles pour le terminal",
       icon: <Terminal className="h-12 w-12 text-primary" />,
       href: "/categories/terminal",
       color: "from-blue-500 to-cyan-500",
@@ -34,10 +25,7 @@ export default function Home() {
     },
     {
       title: "C",
-      description:
-        language === "fr"
-          ? "Syntaxe et fonctions essentielles du langage C"
-          : "Essential syntax and functions of the C language",
+      description: "Syntaxe et fonctions essentielles du langage C",
       icon: <FileCode className="h-12 w-12 text-primary" />,
       href: "/categories/c",
       color: "from-indigo-500 to-purple-500",
@@ -45,8 +33,7 @@ export default function Home() {
     },
     {
       title: "C++",
-      description:
-        language === "fr" ? "Syntaxe et méthodes essentielles du C++" : "Essential syntax and methods of C++",
+      description: "Syntaxe et méthodes essentielles du C++",
       icon: <Cpu className="h-12 w-12 text-primary" />,
       href: "/categories/cpp",
       color: "from-blue-600 to-indigo-600",
@@ -54,8 +41,7 @@ export default function Home() {
     },
     {
       title: "Java",
-      description:
-        language === "fr" ? "Syntaxe et méthodes essentielles de Java" : "Essential syntax and methods of Java",
+      description: "Syntaxe et méthodes essentielles de Java",
       icon: <Coffee className="h-12 w-12 text-primary" />,
       href: "/categories/java",
       color: "from-red-500 to-orange-500",
@@ -63,8 +49,7 @@ export default function Home() {
     },
     {
       title: "Python",
-      description:
-        language === "fr" ? "Syntaxe et méthodes essentielles de Python" : "Essential syntax and methods of Python",
+      description: "Syntaxe et méthodes essentielles de Python",
       icon: <Braces className="h-12 w-12 text-primary" />,
       href: "/categories/python",
       color: "from-blue-500 to-green-500",
@@ -72,10 +57,7 @@ export default function Home() {
     },
     {
       title: "Makefiles",
-      description:
-        language === "fr"
-          ? "Syntaxe et templates essentiels pour les Makefiles"
-          : "Essential syntax and templates for Makefiles",
+      description: "Syntaxe et templates essentiels pour les Makefiles",
       icon: <FileText className="h-12 w-12 text-primary" />,
       href: "/categories/makefiles",
       color: "from-gray-600 to-gray-800",
@@ -135,9 +117,7 @@ export default function Home() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.7, delay: 0.6 }}
         >
-          {language === "fr"
-            ? "Votre référence essentielle pour la programmation et les commandes"
-            : "Your essential reference for programming and commands"}
+          Votre référence essentielle pour la programmation et les commandes
         </motion.p>
       </motion.div>
 
@@ -172,9 +152,7 @@ export default function Home() {
                   <CardDescription className="text-base">{category.description}</CardDescription>
                 </CardContent>
                 <CardFooter>
-                  <div className="text-sm text-primary hover:underline">
-                    {language === "fr" ? "Explorer" : "Explore"} →
-                  </div>
+                  <div className="text-sm text-primary hover:underline">Explorer →</div>
                 </CardFooter>
               </Card>
             </Link>

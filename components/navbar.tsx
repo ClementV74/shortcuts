@@ -3,26 +3,23 @@
 import Link from "next/link"
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X, Command } from 'lucide-react'
+import { Menu, X, Command } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { usePathname } from "next/navigation"
-import { useLanguage } from "@/contexts/language-context"
-import LanguageSelector from "@/components/language-selector"
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
-  const { t } = useLanguage()
 
   const toggleMenu = () => {
     setIsOpen(!isOpen)
   }
 
   const navItems = [
-    { name: t("nav.home"), href: "/" },
-    { name: t("nav.categories"), href: "/categories" },
-    { name: t("nav.vim"), href: "/categories/vim" },
-    { name: t("nav.about"), href: "/about" },
+    { name: "Accueil", href: "/" },
+    { name: "Catégories", href: "/categories" },
+    { name: "Vim", href: "/categories/vim" },
+    { name: "À propos", href: "/about" },
   ]
 
   return (
@@ -48,11 +45,9 @@ export default function Navbar() {
               </Link>
             )
           })}
-          <LanguageSelector />
         </nav>
 
         <div className="flex items-center gap-2 md:hidden">
-          <LanguageSelector />
           <Button variant="ghost" size="icon" onClick={toggleMenu}>
             <Menu className="h-6 w-6" />
             <span className="sr-only">Toggle menu</span>

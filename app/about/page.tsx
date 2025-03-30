@@ -13,9 +13,9 @@ export default function AboutPage() {
         transition={{ duration: 0.5 }}
         className="text-center mb-12 md:mb-20"
       >
-        <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">About Raccourcis</h1>
+        <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">À propos de Raccourcis</h1>
         <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          Your comprehensive reference for keyboard shortcuts and commands
+          Votre référence complète pour les raccourcis clavier et les commandes
         </p>
       </motion.div>
 
@@ -29,14 +29,14 @@ export default function AboutPage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Terminal className="h-5 w-5 text-primary" />
-                Our Mission
+                Notre Mission
               </CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-muted-foreground">
-                Raccourcis was created to provide a comprehensive, user-friendly reference for keyboard shortcuts and
-                commands across various applications and platforms. Our goal is to help users become more efficient and
-                productive by mastering the keyboard shortcuts for their favorite tools.
+                Raccourcis a été créé pour fournir une référence complète et conviviale des raccourcis clavier et des
+                commandes pour diverses applications et plateformes. Notre objectif est d'aider les utilisateurs à
+                devenir plus efficaces et productifs en maîtrisant les raccourcis clavier de leurs outils préférés.
               </p>
             </CardContent>
           </Card>
@@ -51,22 +51,23 @@ export default function AboutPage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Book className="h-5 w-5 text-primary" />
-                Resources
+                Ressources
               </CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-muted-foreground mb-4">
-                Our command references are compiled from official documentation, user guides, and community resources.
-                We strive to keep our information accurate and up-to-date.
+                Nos références de commandes sont compilées à partir de la documentation officielle, des guides
+                d'utilisation et des ressources communautaires. Nous nous efforçons de maintenir nos informations
+                précises et à jour.
               </p>
               <p className="text-muted-foreground">
-                For Vim specifically, we recommend the following resources for further learning:
+                Pour Vim spécifiquement, nous recommandons les ressources suivantes pour approfondir vos connaissances:
               </p>
               <ul className="list-disc list-inside mt-2 text-muted-foreground">
-                <li>The official Vim documentation (:help in Vim)</li>
-                <li>Vim Adventures - Learn Vim while playing a game</li>
-                <li>Practical Vim by Drew Neil</li>
-                <li>Vimcasts.org - Free screencasts about Vim</li>
+                <li>La documentation officielle de Vim (:help dans Vim)</li>
+                <li>Vim Adventures - Apprendre Vim en jouant à un jeu</li>
+                <li>Practical Vim par Drew Neil</li>
+                <li>Vimcasts.org - Screencasts gratuits sur Vim</li>
               </ul>
             </CardContent>
           </Card>
@@ -81,14 +82,14 @@ export default function AboutPage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Github className="h-5 w-5 text-primary" />
-                Contribute
+                Contribuer
               </CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-muted-foreground">
-                Raccourcis is an open-source project. If you'd like to contribute by adding new commands, fixing errors,
-                or improving the website, please visit our GitHub repository. We welcome contributions from the
-                community!
+                Raccourcis est un projet open-source. Si vous souhaitez contribuer en ajoutant de nouvelles commandes,
+                en corrigeant des erreurs, ou en améliorant le site web, veuillez visiter notre dépôt GitHub. Nous
+                accueillons les contributions de la communauté!
               </p>
             </CardContent>
           </Card>
@@ -101,7 +102,7 @@ export default function AboutPage() {
           className="text-center"
         >
           <p className="flex items-center justify-center gap-2 text-muted-foreground">
-            Made with <Heart className="h-4 w-4 text-red-500" /> for the developer community
+            Fait avec <Heart className="h-4 w-4 text-red-500" /> pour la communauté des développeurs
           </p>
         </motion.div>
       </div>
