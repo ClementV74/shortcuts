@@ -11,7 +11,7 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "Raccourcis - Référence de programmation",
   description: "Une référence complète pour les commandes Vim, les langages de programmation et plus encore",
-    generator: 'v0.dev'
+  generator: "v0.dev",
 }
 
 export default function RootLayout({
@@ -34,6 +34,3 @@ export default function RootLayout({
   )
 }
 
-
-
-import './globals.css'

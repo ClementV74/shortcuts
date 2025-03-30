@@ -26,7 +26,7 @@ export default function MakefilesPage() {
 
         // Variable usage
         processedLine = processedLine.replace(
-          /(\$$$[a-zA-Z0-9_]+$$)/g,
+          /(\$$[a-zA-Z0-9_]+)/g,
           '<span class="text-green-500 dark:text-green-300">$1</span>',
         )
 
