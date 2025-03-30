@@ -7,7 +7,6 @@ import { Input } from "@/components/ui/input"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { useLanguage } from "@/contexts/language-context"
 
 // Define the command type
 type TerminalCommand = {
@@ -18,7 +17,6 @@ type TerminalCommand = {
 }
 
 export default function TerminalCommandsPage() {
-  const { t, language } = useLanguage()
   const [searchQuery, setSearchQuery] = useState("")
 
   // Terminal commands organized by category
@@ -26,68 +24,61 @@ export default function TerminalCommandsPage() {
     // File operations
     {
       command: "ls",
-      description: language === "fr" ? "Lister le contenu d'un répertoire" : "List directory contents",
+      description: "Lister le contenu d'un répertoire",
       example: "ls -la",
       category: "file",
     },
     {
       command: "cd",
-      description: language === "fr" ? "Changer de répertoire" : "Change directory",
+      description: "Changer de répertoire",
       example: "cd /home/user/documents",
       category: "file",
     },
     {
       command: "pwd",
-      description: language === "fr" ? "Afficher le répertoire de travail actuel" : "Print working directory",
+      description: "Afficher le répertoire de travail actuel",
       example: "pwd",
       category: "file",
     },
     {
       command: "mkdir",
-      description: language === "fr" ? "Créer un répertoire" : "Make directory",
+      description: "Créer un répertoire",
       example: "mkdir new_folder",
       category: "file",
     },
     {
       command: "rmdir",
-      description: language === "fr" ? "Supprimer un répertoire vide" : "Remove empty directory",
+      description: "Supprimer un répertoire vide",
       example: "rmdir empty_folder",
       category: "file",
     },
     {
       command: "rm",
-      description: language === "fr" ? "Supprimer des fichiers ou répertoires" : "Remove files or directories",
+      description: "Supprimer des fichiers ou répertoires",
       example: "rm file.txt or rm -rf directory",
       category: "file",
     },
     {
       command: "cp",
-      description: language === "fr" ? "Copier des fichiers ou répertoires" : "Copy files or directories",
+      description: "Copier des fichiers ou répertoires",
       example: "cp file.txt /backup/ or cp -r dir1 dir2",
       category: "file",
     },
     {
       command: "mv",
-      description:
-        language === "fr" ? "Déplacer ou renommer des fichiers ou répertoires" : "Move or rename files or directories",
+      description: "Déplacer ou renommer des fichiers ou répertoires",
       example: "mv file.txt new_name.txt or mv file.txt /new/location/",
       category: "file",
     },
     {
       command: "touch",
-      description:
-        language === "fr"
-          ? "Créer un fichier vide ou mettre à jour l'horodatage"
-          : "Create empty file or update timestamp",
+      description: "Créer un fichier vide ou mettre à jour l'horodatage",
       example: "touch newfile.txt",
       category: "file",
     },
     {
       command: "find",
-      description:
-        language === "fr"
-          ? "Rechercher des fichiers dans une hiérarchie de répertoires"
-          : "Search for files in a directory hierarchy",
+      description: "Rechercher des fichiers dans une hiérarchie de répertoires",
       example: "find /home -name '*.txt'",
       category: "file",
     },
@@ -95,56 +86,55 @@ export default function TerminalCommandsPage() {
     // File content
     {
       command: "cat",
-      description: language === "fr" ? "Afficher le contenu d'un fichier" : "Display file content",
+      description: "Afficher le contenu d'un fichier",
       example: "cat file.txt",
       category: "content",
     },
     {
       command: "less",
-      description:
-        language === "fr" ? "Afficher le contenu d'un fichier page par page" : "View file content one page at a time",
+      description: "Afficher le contenu d'un fichier page par page",
       example: "less large_file.txt",
       category: "content",
     },
     {
       command: "head",
-      description: language === "fr" ? "Afficher les premières lignes d'un fichier" : "Display the beginning of a file",
+      description: "Afficher les premières lignes d'un fichier",
       example: "head -n 10 file.txt",
       category: "content",
     },
     {
       command: "tail",
-      description: language === "fr" ? "Afficher les dernières lignes d'un fichier" : "Display the end of a file",
+      description: "Afficher les dernières lignes d'un fichier",
       example: "tail -n 10 file.txt or tail -f log.txt",
       category: "content",
     },
     {
       command: "grep",
-      description: language === "fr" ? "Rechercher du texte dans des fichiers" : "Search text in files",
+      description: "Rechercher du texte dans des fichiers",
       example: "grep 'pattern' file.txt or grep -r 'pattern' directory/",
       category: "content",
     },
     {
       command: "wc",
-      description: language === "fr" ? "Compter les lignes, mots et caractères" : "Count lines, words, and characters",
+      description: "Compter les lignes, mots et caractères",
       example: "wc -l file.txt",
       category: "content",
     },
     {
       command: "sort",
-      description: language === "fr" ? "Trier les lignes d'un fichier" : "Sort lines of text files",
+      description: "Trier les lignes d'un fichier",
       example: "sort file.txt",
       category: "content",
     },
     {
       command: "uniq",
-      description: language === "fr" ? "Rapporter ou omettre les lignes répétées" : "Report or omit repeated lines",
+      description: "Rapporter ou omettre les lignes répétées",
       example: "sort file.txt | uniq",
       category: "content",
     },
     {
       command: "diff",
-      description: language === "fr" ? "Comparer des fichiers ligne par ligne" : "Compare files line by line",
+      description: "Comparer des fichiers ligne par ligne",
       example: "diff file1.txt file2.txt",
       category: "content",
     },
@@ -152,61 +142,55 @@ export default function TerminalCommandsPage() {
     // System information
     {
       command: "uname",
-      description: language === "fr" ? "Afficher les informations du système" : "Print system information",
+      description: "Afficher les informations du système",
       example: "uname -a",
       category: "system",
     },
     {
       command: "df",
-      description: language === "fr" ? "Afficher l'utilisation de l'espace disque" : "Display disk space usage",
+      description: "Afficher l'utilisation de l'espace disque",
       example: "df -h",
       category: "system",
     },
     {
       command: "du",
-      description: language === "fr" ? "Estimer l'utilisation de l'espace fichier" : "Estimate file space usage",
+      description: "Estimer l'utilisation de l'espace fichier",
       example: "du -sh directory/",
       category: "system",
     },
     {
       command: "free",
-      description:
-        language === "fr"
-          ? "Afficher la quantité de mémoire libre et utilisée"
-          : "Display amount of free and used memory",
+      description: "Afficher la quantité de mémoire libre et utilisée",
       example: "free -h",
       category: "system",
     },
     {
       command: "top",
-      description: language === "fr" ? "Afficher les processus en cours d'exécution" : "Display running processes",
+      description: "Afficher les processus en cours d'exécution",
       example: "top",
       category: "system",
     },
     {
       command: "htop",
-      description:
-        language === "fr"
-          ? "Afficher les processus en cours d'exécution (version interactive)"
-          : "Display running processes (interactive version)",
+      description: "Afficher les processus en cours d'exécution (version interactive)",
       example: "htop",
       category: "system",
     },
     {
       command: "ps",
-      description: language === "fr" ? "Afficher les processus en cours" : "Report process status",
+      description: "Afficher les processus en cours",
       example: "ps aux",
       category: "system",
     },
     {
       command: "kill",
-      description: language === "fr" ? "Terminer un processus" : "Terminate a process",
+      description: "Terminer un processus",
       example: "kill -9 1234",
       category: "system",
     },
     {
       command: "killall",
-      description: language === "fr" ? "Terminer des processus par nom" : "Kill processes by name",
+      description: "Terminer des processus par nom",
       example: "killall firefox",
       category: "system",
     },
@@ -214,62 +198,55 @@ export default function TerminalCommandsPage() {
     // Network
     {
       command: "ping",
-      description: language === "fr" ? "Tester la connectivité réseau" : "Test network connectivity",
+      description: "Tester la connectivité réseau",
       example: "ping google.com",
       category: "network",
     },
     {
       command: "ifconfig",
-      description: language === "fr" ? "Configurer une interface réseau" : "Configure network interface",
+      description: "Configurer une interface réseau",
       example: "ifconfig",
       category: "network",
     },
     {
       command: "ip",
-      description:
-        language === "fr"
-          ? "Afficher/manipuler le routage, les périphériques, les tunnels"
-          : "Show/manipulate routing, devices, tunnels",
+      description: "Afficher/manipuler le routage, les périphériques, les tunnels",
       example: "ip addr show",
       category: "network",
     },
     {
       command: "netstat",
-      description:
-        language === "fr"
-          ? "Afficher les connexions réseau, tables de routage, etc."
-          : "Display network connections, routing tables, etc.",
+      description: "Afficher les connexions réseau, tables de routage, etc.",
       example: "netstat -tuln",
       category: "network",
     },
     {
       command: "ss",
-      description: language === "fr" ? "Utilitaire d'investigation de socket" : "Socket statistics",
+      description: "Utilitaire d'investigation de socket",
       example: "ss -tuln",
       category: "network",
     },
     {
       command: "wget",
-      description: language === "fr" ? "Télécharger des fichiers depuis le web" : "Download files from the web",
+      description: "Télécharger des fichiers depuis le web",
       example: "wget https://example.com/file.zip",
       category: "network",
     },
     {
       command: "curl",
-      description:
-        language === "fr" ? "Transférer des données depuis ou vers un serveur" : "Transfer data from or to a server",
+      description: "Transférer des données depuis ou vers un serveur",
       example: "curl -O https://example.com/file.zip",
       category: "network",
     },
     {
       command: "ssh",
-      description: language === "fr" ? "Client Secure Shell" : "Secure Shell client",
+      description: "Client Secure Shell",
       example: "ssh user@hostname",
       category: "network",
     },
     {
       command: "scp",
-      description: language === "fr" ? "Copie sécurisée (basée sur SSH)" : "Secure copy (based on SSH)",
+      description: "Copie sécurisée (basée sur SSH)",
       example: "scp file.txt user@hostname:/path/",
       category: "network",
     },
@@ -277,47 +254,37 @@ export default function TerminalCommandsPage() {
     // Package management
     {
       command: "apt",
-      description:
-        language === "fr" ? "Gestionnaire de paquets pour Debian/Ubuntu" : "Package manager for Debian/Ubuntu",
+      description: "Gestionnaire de paquets pour Debian/Ubuntu",
       example: "apt update && apt upgrade",
       category: "package",
     },
     {
       command: "apt-get",
-      description:
-        language === "fr"
-          ? "Gestionnaire de paquets pour Debian/Ubuntu (ancienne version)"
-          : "Package manager for Debian/Ubuntu (older version)",
+      description: "Gestionnaire de paquets pour Debian/Ubuntu (ancienne version)",
       example: "apt-get install package",
       category: "package",
     },
     {
       command: "yum",
-      description:
-        language === "fr"
-          ? "Gestionnaire de paquets pour RHEL/CentOS/Fedora"
-          : "Package manager for RHEL/CentOS/Fedora",
+      description: "Gestionnaire de paquets pour RHEL/CentOS/Fedora",
       example: "yum install package",
       category: "package",
     },
     {
       command: "dnf",
-      description:
-        language === "fr"
-          ? "Gestionnaire de paquets pour Fedora (nouvelle génération)"
-          : "Package manager for Fedora (next-gen)",
+      description: "Gestionnaire de paquets pour Fedora (nouvelle génération)",
       example: "dnf install package",
       category: "package",
     },
     {
       command: "pacman",
-      description: language === "fr" ? "Gestionnaire de paquets pour Arch Linux" : "Package manager for Arch Linux",
+      description: "Gestionnaire de paquets pour Arch Linux",
       example: "pacman -S package",
       category: "package",
     },
     {
       command: "zypper",
-      description: language === "fr" ? "Gestionnaire de paquets pour openSUSE" : "Package manager for openSUSE",
+      description: "Gestionnaire de paquets pour openSUSE",
       example: "zypper install package",
       category: "package",
     },
@@ -325,44 +292,43 @@ export default function TerminalCommandsPage() {
     // User management
     {
       command: "sudo",
-      description:
-        language === "fr" ? "Exécuter une commande en tant que superutilisateur" : "Execute a command as superuser",
+      description: "Exécuter une commande en tant que superutilisateur",
       example: "sudo apt update",
       category: "user",
     },
     {
       command: "su",
-      description: language === "fr" ? "Changer d'utilisateur" : "Switch user",
+      description: "Changer d'utilisateur",
       example: "su - username",
       category: "user",
     },
     {
       command: "useradd",
-      description: language === "fr" ? "Créer un nouvel utilisateur" : "Create a new user",
+      description: "Créer un nouvel utilisateur",
       example: "sudo useradd -m username",
       category: "user",
     },
     {
       command: "userdel",
-      description: language === "fr" ? "Supprimer un utilisateur" : "Delete a user",
+      description: "Supprimer un utilisateur",
       example: "sudo userdel username",
       category: "user",
     },
     {
       command: "passwd",
-      description: language === "fr" ? "Changer le mot de passe d'un utilisateur" : "Change user password",
+      description: "Changer le mot de passe d'un utilisateur",
       example: "passwd or sudo passwd username",
       category: "user",
     },
     {
       command: "chown",
-      description: language === "fr" ? "Changer le propriétaire d'un fichier" : "Change file owner",
+      description: "Changer le propriétaire d'un fichier",
       example: "sudo chown user:group file.txt",
       category: "user",
     },
     {
       command: "chmod",
-      description: language === "fr" ? "Changer les permissions d'un fichier" : "Change file permissions",
+      description: "Changer les permissions d'un fichier",
       example: "chmod 755 file.txt or chmod +x script.sh",
       category: "user",
     },
@@ -370,31 +336,31 @@ export default function TerminalCommandsPage() {
     // Compression
     {
       command: "tar",
-      description: language === "fr" ? "Archiver des fichiers" : "Archive files",
+      description: "Archiver des fichiers",
       example: "tar -czvf archive.tar.gz directory/",
       category: "compression",
     },
     {
       command: "gzip",
-      description: language === "fr" ? "Compresser des fichiers" : "Compress files",
+      description: "Compresser des fichiers",
       example: "gzip file.txt",
       category: "compression",
     },
     {
       command: "gunzip",
-      description: language === "fr" ? "Décompresser des fichiers gzip" : "Decompress gzip files",
+      description: "Décompresser des fichiers gzip",
       example: "gunzip file.txt.gz",
       category: "compression",
     },
     {
       command: "zip",
-      description: language === "fr" ? "Créer des archives zip" : "Package and compress files",
+      description: "Créer des archives zip",
       example: "zip -r archive.zip directory/",
       category: "compression",
     },
     {
       command: "unzip",
-      description: language === "fr" ? "Extraire des archives zip" : "Extract zip archives",
+      description: "Extraire des archives zip",
       example: "unzip archive.zip",
       category: "compression",
     },
@@ -402,13 +368,13 @@ export default function TerminalCommandsPage() {
 
   // Group commands by category
   const categories = [
-    { id: "file", name: language === "fr" ? "Opérations sur les fichiers" : "File Operations", icon: "📁" },
-    { id: "content", name: language === "fr" ? "Contenu des fichiers" : "File Content", icon: "📄" },
-    { id: "system", name: language === "fr" ? "Informations système" : "System Information", icon: "💻" },
-    { id: "network", name: language === "fr" ? "Réseau" : "Network", icon: "🌐" },
-    { id: "package", name: language === "fr" ? "Gestion des paquets" : "Package Management", icon: "📦" },
-    { id: "user", name: language === "fr" ? "Gestion des utilisateurs" : "User Management", icon: "👤" },
-    { id: "compression", name: language === "fr" ? "Compression" : "Compression", icon: "🗜️" },
+    { id: "file", name: "Opérations sur les fichiers", icon: "📁" },
+    { id: "content", name: "Contenu des fichiers", icon: "📄" },
+    { id: "system", name: "Informations système", icon: "💻" },
+    { id: "network", name: "Réseau", icon: "🌐" },
+    { id: "package", name: "Gestion des paquets", icon: "📦" },
+    { id: "user", name: "Gestion des utilisateurs", icon: "👤" },
+    { id: "compression", name: "Compression", icon: "🗜️" },
   ]
 
   // Filter commands based on search query
@@ -429,14 +395,10 @@ export default function TerminalCommandsPage() {
       >
         <div className="flex items-center gap-3 mb-4">
           <Terminal className="h-8 w-8 text-primary" />
-          <h1 className="text-4xl font-bold tracking-tight">
-            {language === "fr" ? "Commandes Terminal Linux" : "Linux Terminal Commands"}
-          </h1>
+          <h1 className="text-4xl font-bold tracking-tight">Commandes Terminal Linux</h1>
         </div>
         <p className="text-xl text-muted-foreground max-w-3xl">
-          {language === "fr"
-            ? "Une référence complète des commandes terminal Linux pour une utilisation efficace du système"
-            : "A comprehensive reference of Linux terminal commands for efficient system usage"}
+          Une référence complète des commandes terminal Linux pour une utilisation efficace du système
         </p>
       </motion.div>
 
@@ -450,7 +412,7 @@ export default function TerminalCommandsPage() {
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
             type="search"
-            placeholder={language === "fr" ? "Rechercher des commandes..." : "Search commands..."}
+            placeholder="Rechercher des commandes..."
             className="pl-10"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -502,9 +464,7 @@ export default function TerminalCommandsPage() {
                               </CardDescription>
                               {cmd.example && (
                                 <div className="mt-2 pt-2 border-t border-border/50">
-                                  <p className="text-xs font-medium text-muted-foreground mb-1">
-                                    {language === "fr" ? "Exemple:" : "Example:"}
-                                  </p>
+                                  <p className="text-xs font-medium text-muted-foreground mb-1">Exemple:</p>
                                   <code className="text-xs bg-muted p-1 rounded font-mono block">{cmd.example}</code>
                                 </div>
                               )}
