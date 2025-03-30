@@ -1,7 +1,6 @@
 "use client"
 
 // Inspired by react-hot-toast library
-//ghel
 import * as React from "react"
 
 import type {
