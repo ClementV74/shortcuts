@@ -3,7 +3,7 @@
 import { motion } from "framer-motion"
 import Link from "next/link"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Code, Terminal, Coffee, FileCode, FileText, Cpu, Braces } from "lucide-react"
+import { Code, Terminal, Coffee, FileCode, FileText, Cpu, Braces, Hash } from "lucide-react"
 
 export default function Home() {
   const categories = [
@@ -62,6 +62,22 @@ export default function Home() {
       href: "/categories/makefiles",
       color: "from-gray-600 to-gray-800",
       delay: 0.7,
+    },
+    {
+      title: "Assembleur",
+      description: "Instructions et registres essentiels en assembleur x86/x64",
+      icon: <Code className="h-12 w-12 text-primary" />,
+      href: "/categories/assembly",
+      color: "from-red-600 to-red-800",
+      delay: 0.8,
+    },
+    {
+      title: "C#",
+      description: "Syntaxe et méthodes essentielles du langage C#",
+      icon: <Hash className="h-12 w-12 text-primary" />,
+      href: "/categories/csharp",
+      color: "from-green-600 to-teal-600",
+      delay: 0.9,
     },
   ]
 
@@ -162,4 +178,3 @@ export default function Home() {
     </div>
   )
 }
-

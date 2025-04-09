@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion"
 import Link from "next/link"
-import { ArrowRight, Terminal, Command, Keyboard, Code, Zap, Monitor, FileCode, Coffee, File } from "lucide-react"
+import { ArrowRight, Terminal, Command, Keyboard, Code, Zap, Monitor, FileCode, Coffee, File, Hash } from "lucide-react"
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 
 export default function CategoriesPage() {
@@ -79,6 +79,20 @@ export default function CategoriesPage() {
       href: "/categories/makefiles",
       featured: true,
     },
+    {
+      title: "Assembleur",
+      icon: <Code className="h-8 w-8" />,
+      description: "Instructions et registres essentiels en assembleur x86/x64",
+      href: "/categories/assembly",
+      featured: true,
+    },
+    {
+      title: "C#",
+      icon: <Hash className="h-8 w-8" />,
+      description: "Syntaxe, méthodes et bonnes pratiques du langage C#",
+      href: "/categories/csharp",
+      featured: true,
+    },
   ]
 
   return (
@@ -132,4 +146,3 @@ export default function CategoriesPage() {
     </div>
   )
 }
-
